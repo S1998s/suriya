@@ -194,6 +194,8 @@ export default function Gallery() {
                 <motion.img
                   src={activeGallery.image}
                   alt={activeGallery.title}
+                  loading="eager"
+                  decoding="async"
                   className="mb-5 max-h-[min(55vh,520px)] w-full cursor-default rounded-xl border-2 border-lime-400 object-contain sm:max-h-[520px]"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
@@ -332,6 +334,8 @@ export default function Gallery() {
                         <motion.img
                           src={gallery.image}
                           alt={gallery.title}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                           whileHover={reduce ? undefined : { scale: 1.08 }}
                           transition={{ duration: 0.45, ease }}
