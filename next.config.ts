@@ -1,12 +1,15 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+const basePath = isProd ? "/surya.github.io" : "";
+
 const nextConfig: NextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/surya.github.io',
-  assetPrefix: '/surya.github.io',
+  basePath,
+  assetPrefix: basePath,
   env: {
-    NEXT_PUBLIC_BASE_PATH: '/surya.github.io',
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
   typescript: {
     ignoreBuildErrors: false,

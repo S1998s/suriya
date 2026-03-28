@@ -22,7 +22,7 @@ export default function Landing() {
           <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-cyan-500 to-pink-500 mx-auto my-6 sm:my-8 rounded-full"></div>
           
           <p className="text-lg sm:text-xl text-cyan-300 mb-3 sm:mb-4 font-bold drop-shadow-lg">Welcome, Visitor.</p>
-          <p className="text-base sm:text-lg text-gray-400 mb-6 sm:mb-8">You are about to see the real world...</p>
+          <p className="text-base sm:text-lg text-gray-400 mb-6 sm:mb-8">You are about to see the real world.</p>
           <p className="text-xl sm:text-2xl font-black text-white drop-shadow-lg">
             <span className="text-cyan-400">Which pill</span> will you choose?
           </p>
@@ -61,17 +61,8 @@ export default function Landing() {
 
             {/* Label Below */}
             <p className="text-cyan-400 font-bold text-xs sm:text-sm mt-4 sm:mt-6 text-center drop-shadow-lg">Take the Blue Pill</p>
-            <p className="text-gray-500 text-xs text-center mt-1">Career • Experience • Excellence</p>
+            <p className="text-gray-200 text-xs sm:text-sm font-medium text-center mt-1 drop-shadow-lg">Career • Experience • Excellence</p>
           </Link>
-
-          {/* OR Divider */}
-          <div className="flex md:flex-col items-center gap-2 w-full md:w-auto">
-            <div className="h-8 md:h-auto w-0.5 md:w-0 bg-white drop-shadow-lg"></div>
-            <div className="text-white text-lg md:text-2xl font-black drop-shadow-lg">—</div>
-            <p className="text-gray-500 font-bold text-xs sm:text-sm drop-shadow-lg">OR</p>
-            <div className="text-white text-lg md:text-2xl font-black drop-shadow-lg">—</div>
-            <div className="h-8 md:h-auto w-0.5 md:w-0 bg-white drop-shadow-lg"></div>
-          </div>
 
           {/* Personal Pill (Red/Pink) */}
           <Link
@@ -104,24 +95,14 @@ export default function Landing() {
 
             {/* Label Below */}
             <p className="text-pink-400 font-bold text-xs sm:text-sm mt-4 sm:mt-6 text-center drop-shadow-lg">Take the Red Pill</p>
-            <p className="text-gray-500 text-xs text-center mt-1">Creative • Authentic • Adventure</p>
+            <p className="text-gray-200 text-xs sm:text-sm font-medium text-center mt-1 drop-shadow-lg">Creative • Authentic • Adventure</p>
           </Link>
         </div>
 
         {/* Bottom Philosophy */}
-        <div className="mt-16 sm:mt-20 pt-8 sm:pt-12 border-t border-cyan-900/50 px-4">
-          <p className="text-gray-500 text-xs sm:text-sm font-mono drop-shadow-lg max-w-2xl mx-auto mb-3 sm:mb-4">
-            &gt; &quot;This is your last chance. After this, there is no turning back...&quot;
-          </p>
+        <div className="mt-16 pt-8 border-t border-cyan-900/50 px-4">
           <p className="text-cyan-400 text-sm drop-shadow-lg">
             Choose one path. Explore everything. Discover yourself.
-          </p>
-        </div>
-
-        {/* Contact Info */}
-        <div className="mt-8 sm:mt-12 px-4">
-          <p className="text-gray-500 text-xs sm:text-sm break-words">
-            📧 {contactEmail} • 📱 {contactPhone}
           </p>
         </div>
       </div>
