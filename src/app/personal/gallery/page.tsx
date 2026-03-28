@@ -43,7 +43,7 @@ export default function Gallery() {
         id: 17,
         title: "Groom photos",
         category: "groom",
-        image: imagePath("/images/personal/IMG_5426.png"),
+        image: imagePath("/images/personal/IMG_5426.PNG"),
         description: "Mountain hiking and nature exploration",
       },
       {
