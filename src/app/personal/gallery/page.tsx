@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -10,8 +9,6 @@ import { Reveal, ScrollProgressBar } from "@/components/personal/personal-motion
 const ease = [0.22, 1, 0.36, 1] as const;
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const imagePath = (src: string) => `${basePath}${src}`;
-
-const blurDataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAn8B9lijQwAAAABJRU5ErkJggg==";
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -194,15 +191,13 @@ export default function Gallery() {
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
+                <motion.img
                   src={activeGallery.image}
                   alt={activeGallery.title}
-                  width={1600}
-                  height={900}
-                  unoptimized
-                  placeholder="blur"
-                  blurDataURL={blurDataURL}
                   className="mb-5 max-h-[min(55vh,520px)] w-full cursor-default rounded-xl border-2 border-lime-400 object-contain sm:max-h-[520px]"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
                 />
                 <motion.button
                   type="button"
@@ -292,16 +287,32 @@ export default function Gallery() {
 
         <section className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedCategory}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                  <AnimatePresence mode="popLayout">
                     {displayedGalleries.map((gallery, idx) => {
                       const isCategoryMode = selectedCategory !== "all";
                       return (
                     <motion.button
                       key={gallery.id}
                       type="button"
-                      initial={reduce ? false : { opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: reduce ? 0 : idx * 0.03, ease }}
+                      layout
+                      initial={reduce ? false : { opacity: 0, y: 28, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={reduce ? undefined : { opacity: 0, scale: 0.92, y: -16 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: reduce ? 0 : idx * 0.04,
+                        ease,
+                        layout: { duration: 0.35, ease },
+                      }}
                       onClick={() => {
                         if (!isCategoryMode) {
                           setSelectedCategory(gallery.category.toLowerCase());
@@ -314,19 +325,16 @@ export default function Gallery() {
                           ? "border-lime-400 bg-gradient-to-br from-indigo-900 via-purple-800 to-cyan-900"
                           : "aspect-square border-lime-400 bg-gradient-to-br from-purple-600 to-purple-900"
                       }`}
-                      whileHover={reduce ? undefined : { y: -2 }}
-                      whileTap={reduce ? undefined : { scale: 0.99 }}
+                      whileHover={reduce ? undefined : { y: -4, borderColor: "rgb(34 211 238)" }}
+                      whileTap={reduce ? undefined : { scale: 0.97 }}
                     >
                       <div className="relative aspect-square h-full w-full overflow-hidden rounded-xl sm:rounded-2xl">
-                        <Image
+                        <motion.img
                           src={gallery.image}
                           alt={gallery.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          unoptimized
-                          placeholder="blur"
-                          blurDataURL={blurDataURL}
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                          whileHover={reduce ? undefined : { scale: 1.08 }}
+                          transition={{ duration: 0.45, ease }}
                         />
                       </div>
                       {isCategoryMode ? (
@@ -362,7 +370,10 @@ export default function Gallery() {
                     </motion.button>
                   );
                 })}
+              </AnimatePresence>
             </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </section>
         <section className="border-t border-white/10 bg-gradient-to-r from-purple-800/50 to-pink-800/50 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">

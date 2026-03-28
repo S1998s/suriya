@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -11,7 +10,6 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const imagePath = (src: string) => `${basePath}${src}`;
-const blurDataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAn8B9lijQwAAAABJRU5ErkJggg==";
 
 const photos = [
   { id: 1, title: "Personal Moment 1", category: "family", image: imagePath("/images/personal/IMG_0657.JPG.jpeg"), date: "2025", description: "A beautiful personal moment" },
@@ -35,19 +33,24 @@ const photos = [
 
 export default function Photos() {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const reduce = useReducedMotion();
 
+  const categoryList = ["all", ...Array.from(new Set(photos.map((photo) => photo.category.toLowerCase())))];
+
+  const filteredPhotos = selectedCategory === "all" ? photos : photos.filter((photo) => photo.category.toLowerCase() === selectedCategory);
+
   const categoryMeta: Record<string, { title: string; description: string }> = {
-    family: { title: "Family Memories ❤️", description: "Warm family portraits and special celebrations" },
-    groom: { title: "Groom Journey 💍", description: "Adventure and transformation captures" },
-    sports: { title: "Sports Highlights 🏏", description: "Action-packed sports shots and energetic moments" },
-    candid: { title: "Candid Flicks 📸", description: "Natural candid shots showing raw emotion and storytelling" },
-    transformation: { title: "Transformation Stories 🔄", description: "Before and after moments that document progress" },
-    childhood: { title: "Childhood Tales 🌟", description: "Nostalgic childhood memories and early-days fun" },
+    all: { title: "The Full Album 🎬", description: `${filteredPhotos.length} moments of pure chaos & creativity! Tap any pic to see it big 👆` },
+    family: { title: "Family Memories ❤️", description: `Warm family portraits and special celebrations (${filteredPhotos.length} photos)` },
+    groom: { title: "Groom Journey 💍", description: `Adventure and transformation captures from the groom collection (${filteredPhotos.length} photos)` },
+    sports: { title: "Sports Highlights 🏏", description: `Action-packed sports shots and energetic moments (${filteredPhotos.length} photos)` },
+    candid: { title: "Candid Flicks 📸", description: `Natural candid shots showing raw emotion and storytelling (${filteredPhotos.length} photos)` },
+    transformation: { title: "Transformation Stories 🔄", description: `Before and after moments that document progress (${filteredPhotos.length} photos)` },
+    childhood: { title: "Childhood Tales 🌟", description: `Nostalgic childhood memories and early-days fun (${filteredPhotos.length} photos)` },
   };
 
-  const currentPhoto = selectedPhoto !== null ? photos[selectedPhoto] : null;
-  const currentCategoryMeta = currentPhoto ? categoryMeta[currentPhoto.category] : null;
+  const currentMeta = categoryMeta[selectedCategory] || categoryMeta.all;
 
   const close = useCallback(() => setSelectedPhoto(null), []);
 
@@ -73,14 +76,28 @@ export default function Photos() {
 
       <main>
         <section className="px-4 pb-6 pt-12 text-center sm:px-6 sm:pb-8 sm:pt-16 lg:px-8">
+          <div className="mb-5 flex flex-wrap justify-center gap-2">
+            {categoryList.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={`rounded-full px-4 py-2 text-sm font-black transition-all ${
+                  selectedCategory === category
+                    ? "bg-lime-400 text-black shadow-lg"
+                    : "border border-white/30 bg-white/10 text-white hover:bg-white/20"
+                }`}
+              >
+                {category === "all" ? "All" : category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            ))}
+          </div>
           <Reveal from="up">
             <h1 className="text-4xl font-black text-lime-300 drop-shadow-lg sm:text-5xl md:text-6xl">
-              {currentCategoryMeta ? currentCategoryMeta.title : "The Full Album 🎬"}
+              {currentMeta.title}
             </h1>
             <p className="mt-4 text-base font-bold text-white drop-shadow-md sm:text-xl">
-              {currentCategoryMeta
-                ? currentCategoryMeta.description
-                : `${photos.length} moments of pure chaos & creativity; each category tells a unique story.`}
+              {currentMeta.description}
             </p>
           </Reveal>
         </section>
@@ -107,15 +124,13 @@ export default function Photos() {
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
+                <motion.img
                   src={photos[selectedPhoto].image}
                   alt={photos[selectedPhoto].title}
-                  width={1600}
-                  height={900}
-                  unoptimized
-                  placeholder="blur"
-                  blurDataURL={blurDataURL}
                   className="mb-5 max-h-[min(55vh,500px)] w-full rounded-xl border-2 border-lime-400 object-contain sm:max-h-[500px]"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
                 />
 
                 <motion.button
@@ -135,7 +150,7 @@ export default function Photos() {
         <section className="px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-              {photos.map((photo, idx) => (
+              {filteredPhotos.map((photo, idx) => (
                 <motion.button
                   key={photo.id}
                   type="button"
@@ -148,14 +163,9 @@ export default function Photos() {
                   whileHover={reduce ? undefined : { y: -4, borderColor: "rgb(34 211 238)" }}
                   whileTap={reduce ? undefined : { scale: 0.97 }}
                 >
-                  <Image
+                  <img
                     src={photo.image}
                     alt={photo.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    unoptimized
-                    placeholder="blur"
-                    blurDataURL={blurDataURL}
                     className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
