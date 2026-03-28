@@ -288,32 +288,16 @@ export default function Gallery() {
 
         <section className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedCategory}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
-              >
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-                  <AnimatePresence mode="popLayout">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
                     {displayedGalleries.map((gallery, idx) => {
                       const isCategoryMode = selectedCategory !== "all";
                       return (
                     <motion.button
                       key={gallery.id}
                       type="button"
-                      layout
-                      initial={reduce ? false : { opacity: 0, y: 28, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={reduce ? undefined : { opacity: 0, scale: 0.92, y: -16 }}
-                      transition={{
-                        duration: 0.4,
-                        delay: reduce ? 0 : idx * 0.04,
-                        ease,
-                        layout: { duration: 0.35, ease },
-                      }}
+                      initial={reduce ? false : { opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: reduce ? 0 : idx * 0.03, ease }}
                       onClick={() => {
                         if (!isCategoryMode) {
                           setSelectedCategory(gallery.category.toLowerCase());
@@ -326,8 +310,8 @@ export default function Gallery() {
                           ? "border-lime-400 bg-gradient-to-br from-indigo-900 via-purple-800 to-cyan-900"
                           : "aspect-square border-lime-400 bg-gradient-to-br from-purple-600 to-purple-900"
                       }`}
-                      whileHover={reduce ? undefined : { y: -4, borderColor: "rgb(34 211 238)" }}
-                      whileTap={reduce ? undefined : { scale: 0.97 }}
+                      whileHover={reduce ? undefined : { y: -2 }}
+                      whileTap={reduce ? undefined : { scale: 0.99 }}
                     >
                       <div className="relative aspect-square h-full w-full overflow-hidden rounded-xl sm:rounded-2xl">
                         <Image
@@ -372,10 +356,7 @@ export default function Gallery() {
                     </motion.button>
                   );
                 })}
-              </AnimatePresence>
             </div>
-              </motion.div>
-            </AnimatePresence>
           </div>
         </section>
         <section className="border-t border-white/10 bg-gradient-to-r from-purple-800/50 to-pink-800/50 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
