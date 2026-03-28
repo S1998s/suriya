@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -105,15 +106,13 @@ export default function Photos() {
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <motion.img
+                <Image
                   src={photos[selectedPhoto].image}
                   alt={photos[selectedPhoto].title}
-                  loading="eager"
-                  decoding="async"
+                  width={1600}
+                  height={900}
+                  unoptimized
                   className="mb-5 max-h-[min(55vh,500px)] w-full rounded-xl border-2 border-lime-400 object-contain sm:max-h-[500px]"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
                 />
 
                 <motion.button
@@ -146,11 +145,12 @@ export default function Photos() {
                   whileHover={reduce ? undefined : { y: -4, borderColor: "rgb(34 211 238)" }}
                   whileTap={reduce ? undefined : { scale: 0.97 }}
                 >
-                  <img
+                  <Image
                     src={photo.image}
                     alt={photo.title}
-                    loading="lazy"
-                    decoding="async"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    unoptimized
                     className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

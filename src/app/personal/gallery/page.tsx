@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -191,15 +192,13 @@ export default function Gallery() {
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <motion.img
+                <Image
                   src={activeGallery.image}
                   alt={activeGallery.title}
-                  loading="eager"
-                  decoding="async"
+                  width={1600}
+                  height={900}
+                  unoptimized
                   className="mb-5 max-h-[min(55vh,520px)] w-full cursor-default rounded-xl border-2 border-lime-400 object-contain sm:max-h-[520px]"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
                 />
                 <motion.button
                   type="button"
@@ -331,14 +330,13 @@ export default function Gallery() {
                       whileTap={reduce ? undefined : { scale: 0.97 }}
                     >
                       <div className="relative aspect-square h-full w-full overflow-hidden rounded-xl sm:rounded-2xl">
-                        <motion.img
+                        <Image
                           src={gallery.image}
                           alt={gallery.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                          whileHover={reduce ? undefined : { scale: 1.08 }}
-                          transition={{ duration: 0.45, ease }}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          unoptimized
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                         />
                       </div>
                       {isCategoryMode ? (
