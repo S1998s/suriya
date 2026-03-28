@@ -7,24 +7,27 @@ import PersonalNavMotion from "@/components/personal/PersonalNavMotion";
 import { Reveal, ScrollProgressBar } from "@/components/personal/personal-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const imagePath = (src: string) => `${basePath}${src}`;
 
 const photos = [
-  { id: 1, title: "Personal Moment 1", category: "nature", image: "/surya.github.io/images/personal/IMG_0657.JPG.jpeg", date: "2025", description: "A beautiful personal moment" },
-  { id: 2, title: "Personal Moment 2", category: "groom", image: "/surya.github.io/images/personal/IMG_20260102_124714.jpg.jpeg", date: "2026", description: "groom memory captured" },
-  { id: 3, title: "Personal Moment 3", category: "Transformation", image: "/surya.github.io/images/personal/IMG_6918.JPG.jpeg", date: "2025", description: "Urban exploration" },
-  { id: 4, title: "Cricket Action 1", category: "sports", image: "/surya.github.io/images/personal/IMG_2645.JPG.jpeg", date: "2026", description: "Cricket playing moment" },
-  { id: 5, title: "Sports Moment", category: "candid", image: "/surya.github.io/images/personal/IMG_3929.JPG.jpeg", date: "2025", description: "Sports activity capture" },
-  { id: 6, title: "Family Moment 1", category: "family", image: "/surya.github.io/images/personal/35864.jpg.jpeg", date: "2025", description: "Family gathering" },
-  { id: 7, title: "Family Moment 2", category: "family", image: "/surya.github.io/images/personal/35873.jpg.jpeg", date: "2025", description: "Family celebration" },
-  { id: 8, title: "Family Moment 3", category: "family", image: "/surya.github.io/images/personal/44252.jpg.jpeg", date: "2025", description: "Family memories" },
-  { id: 9, title: "Personal Moment 4", category: "nature", image: "/surya.github.io/images/personal/1678018714280.jpg.jpeg", date: "2023", description: "Nature moment" },
-  { id: 10, title: "Personal Moment 5", category: "groom", image: "/surya.github.io/images/personal/IMG_3883.JPG.jpeg", date: "2024", description: "groom capture" },
-  { id: 11, title: "Personal Moment 7", category: "nature", image: "/surya.github.io/images/personal/IMG_20260321_214954.jpg.jpeg", date: "2024", description: "Nature exploration" },
-  { id: 12, title: "Special Photo", category: "family", image: "/surya.github.io/images/personal/IMG_0935 Copy Copy.jpg.jpeg", date: "2025", description: "Special moment captured" },
-  { id: 13, title: "Special Photo", category: "family", image: "/surya.github.io/images/personal/IMG_5017.jpg", date: "2025", description: "Special moment captured" },
-  { id: 14, title: "Special Photo", category: "family", image: "/surya.github.io/images/personal/IMG_6428.jpg", date: "2025", description: "Special moment captured" },
-  { id: 15, title: "Special Photo", category: "family", image: "/surya.github.io/images/personal/IMG_5027.jpg", date: "2025", description: "Special moment captured" },
-  { id: 16, title: "Special Photo", category: "family", image: "/surya.github.io/images/personal/IMG_5026.jpg", date: "2025", description: "Special moment captured" },
+  { id: 1, title: "Personal Moment 1", category: "nature", image: imagePath("/images/personal/IMG_0657.JPG.jpeg"), date: "2025", description: "A beautiful personal moment" },
+  { id: 2, title: "Personal Moment 2", category: "groom", image: imagePath("/images/personal/IMG_20260102_124714.jpg.jpeg"), date: "2026", description: "groom memory captured" },
+  { id: 3, title: "Personal Moment 3", category: "Transformation", image: imagePath("/images/personal/IMG_6918.JPG.jpeg"), date: "2025", description: "Urban exploration" },
+  { id: 4, title: "Cricket Action 1", category: "sports", image: imagePath("/images/personal/IMG_2645.JPG.jpeg"), date: "2026", description: "Cricket playing moment" },
+  { id: 5, title: "Sports Moment", category: "candid", image: imagePath("/images/personal/IMG_3929.JPG.jpeg"), date: "2025", description: "Sports activity capture" },
+  { id: 6, title: "Family Moment 1", category: "family", image: imagePath("/images/personal/35864.jpg.jpeg"), date: "2025", description: "Family gathering" },
+  { id: 7, title: "Family Moment 2", category: "family", image: imagePath("/images/personal/35873.jpg.jpeg"), date: "2025", description: "Family celebration" },
+  { id: 8, title: "Family Moment 3", category: "family", image: imagePath("/images/personal/44252.jpg.jpeg"), date: "2025", description: "Family memories" },
+  { id: 9, title: "Personal Moment 4", category: "nature", image: imagePath("/images/personal/1678018714280.jpg.jpeg"), date: "2023", description: "Nature moment" },
+  { id: 10, title: "Personal Moment 5", category: "groom", image: imagePath("/images/personal/IMG_3883.JPG.jpeg"), date: "2024", description: "groom capture" },
+  { id: 11, title: "Personal Moment 7", category: "nature", image: imagePath("/images/personal/IMG_20260321_214954.jpg.jpeg"), date: "2024", description: "Nature exploration" },
+  { id: 12, title: "Special Photo", category: "family", image: imagePath("/images/personal/IMG_0935%20Copy%20Copy.jpg.jpeg"), date: "2025", description: "Special moment captured" },
+  { id: 13, title: "Special Photo", category: "family", image: imagePath("/images/personal/IMG_5017.jpg"), date: "2025", description: "Special moment captured" },
+  { id: 14, title: "Special Photo", category: "family", image: imagePath("/images/personal/IMG_6428.jpg"), date: "2025", description: "Special moment captured" },
+  { id: 15, title: "Special Photo", category: "family", image: imagePath("/images/personal/IMG_5027.jpg"), date: "2025", description: "Special moment captured" },
+  { id: 16, title: "Special Photo", category: "family", image: imagePath("/images/personal/IMG_5026.jpg"), date: "2025", description: "Special moment captured" },
 ];
 
 export default function Photos() {

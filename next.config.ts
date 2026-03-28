@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath: '/surya.github.io',
   assetPrefix: '/surya.github.io',
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/surya.github.io',
+  },
   typescript: {
     ignoreBuildErrors: false,
   },

@@ -7,6 +7,8 @@ import PersonalNavMotion from "@/components/personal/PersonalNavMotion";
 import { Reveal, ScrollProgressBar } from "@/components/personal/personal-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const imagePath = (src: string) => `${basePath}${src}`;
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -20,72 +22,72 @@ export default function Gallery() {
         id: 1,
         title: "Childhood",
         category: "Childhood",
-        image: "/surya.github.io/images/personal/IMG_0657.JPG.jpeg",
+        image: imagePath("/images/personal/IMG_0657.JPG.jpeg"),
         description: "Beautiful sunrise captures from various locations",
       },
       {
         id: 16,
         title: "Childhood",
         category: "Childhood",
-        image: "/surya.github.io/images/personal/IMG_2645.JPG.jpeg",
+        image: imagePath("/images/personal/IMG_2645.JPG.jpeg"),
         description: "Beautiful sunrise captures from various locations",
       },
       {
         id: 2,
         title: "Groom photos",
         category: "groom",
-        image: "/surya.github.io/images/personal/IMG_20260102_124714.jpg.jpeg",
+        image: imagePath("/images/personal/IMG_20260102_124714.jpg.jpeg"),
         description: "Mountain hiking and nature exploration",
       },
       {
         id: 17,
         title: "Groom photos",
         category: "groom",
-        image: "/surya.github.io/images/personal/IMG_5426.png",
+        image: imagePath("/images/personal/IMG_5426.png"),
         description: "Mountain hiking and nature exploration",
       },
       {
         id: 3,
         title: "Transformation",
         category: "groom",
-        image: "/surya.github.io/images/personal/IMG_6918.JPG.jpeg",
+        image: imagePath("/images/personal/IMG_6918.JPG.jpeg"),
         description: "City life and urban landscapes",
       },
       {
         id: 4,
         title: "Cricket Passion",
         category: "sports",
-        image: "/surya.github.io/images/personal/35864.jpg.jpeg",
+        image: imagePath("/images/personal/35864.jpg.jpeg"),
         description: "Cricket matches and playing moments",
       },
       {
         id: 5,
         title: "Candid",
         category: "candid",
-        image: "/surya.github.io/images/personal/IMG_3929.JPG.jpeg",
+        image: imagePath("/images/personal/IMG_3929.JPG.jpeg"),
         description: "Fitness journey and sports activities",
       },
       {
         id: 10,
         title: "Candid",
         category: "candid",
-        image: "/surya.github.io/images/personal/IMG_6428.jpg",
+        image: imagePath("/images/personal/IMG_6428.jpg"),
         description: "Fitness journey and sports activities",
       },
       {
         id: 6,
         title: "Family Moments",
         category: "family",
-        image: "/surya.github.io/images/personal/IMG_20260321_214954.jpg.jpeg",
+        image: imagePath("/images/personal/IMG_20260321_214954.jpg.jpeg"),
         description: "Precious family memories and celebrations",
       },
-      { id: 7, title: "Family Moment 2", category: "sports", image: "/surya.github.io/images/personal/35873.jpg.jpeg", date: "2025", description: "Family celebration" },
-      { id: 8, title: "Vicktory", category: "sports", image: "/surya.github.io/images/personal/44252.jpg.jpeg", date: "2025", description: "Family memories" },
-      { id: 9, title: "Before won", category: "transformation", phase: "before", image: "/surya.github.io/images/personal/1678018714280.jpg.jpeg", date: "2023", description: "Nature moment" },
-      { id: 12, title: "Special Photo", category: "groom", image: "/surya.github.io/images/personal/IMG_0935%20Copy%20Copy.jpg.jpeg", date: "2025", description: "Special moment captured" },
-      { id: 13, title: "After Transformation", category: "transformation", phase: "after", image: "/surya.github.io/images/personal/IMG_5017.jpg", date: "2024", description: "Urban scene" },
-      { id: 14, title: "Transformation Complete", category: "transformation", phase: "after", image: "/surya.github.io/images/personal/IMG_5027.jpg", date: "2024", description: "New beginning" },
-      { id: 15, title: "Transformation Complete", category: "transformation", phase: "after", image: "/surya.github.io/images/personal/IMG_5026.jpg", date: "2024", description: "New beginning" },
+      { id: 7, title: "Family Moment 2", category: "sports", image: imagePath("/images/personal/35873.jpg.jpeg"), date: "2025", description: "Family celebration" },
+      { id: 8, title: "Vicktory", category: "sports", image: imagePath("/images/personal/44252.jpg.jpeg"), date: "2025", description: "Family memories" },
+      { id: 9, title: "Before won", category: "transformation", phase: "before", image: imagePath("/images/personal/1678018714280.jpg.jpeg"), date: "2023", description: "Nature moment" },
+      { id: 12, title: "Special Photo", category: "groom", image: imagePath("/images/personal/IMG_0935%20Copy%20Copy.jpg.jpeg"), date: "2025", description: "Special moment captured" },
+      { id: 13, title: "After Transformation", category: "transformation", phase: "after", image: imagePath("/images/personal/IMG_5017.jpg"), date: "2024", description: "Urban scene" },
+      { id: 14, title: "Transformation Complete", category: "transformation", phase: "after", image: imagePath("/images/personal/IMG_5027.jpg"), date: "2024", description: "New beginning" },
+      { id: 15, title: "Transformation Complete", category: "transformation", phase: "after", image: imagePath("/images/personal/IMG_5026.jpg"), date: "2024", description: "New beginning" },
     ],
     []
   );
