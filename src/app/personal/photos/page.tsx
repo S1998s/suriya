@@ -108,6 +108,8 @@ export default function Photos() {
                 <motion.img
                   src={photos[selectedPhoto].image}
                   alt={photos[selectedPhoto].title}
+                  loading="eager"
+                  decoding="async"
                   className="mb-5 max-h-[min(55vh,500px)] w-full rounded-xl border-2 border-lime-400 object-contain sm:max-h-[500px]"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
@@ -147,6 +149,8 @@ export default function Photos() {
                   <img
                     src={photo.image}
                     alt={photo.title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
