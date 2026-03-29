@@ -14,7 +14,6 @@ export default function Projects() {
       technologies: ["Enterprise stack", "SQL Server", "Machine Integration", "Data Capture"],
       image: "🏭",
       details: "Developed and maintained a large-scale manufacturing management system supporting multi-plant production operations. Enabled real-time monitoring of receiving, processing, quality control, and packing workflows through machine-integrated data capture. Delivered reporting and analytics solutions to improve operational visibility, production efficiency, and compliance tracking.",
-      link: "#",
     },
     {
       id: 2,
@@ -24,7 +23,6 @@ export default function Projects() {
       technologies: ["Enterprise stack", "SQL Server", "Audit Workflows", "Compliance"],
       image: "💰",
       details: "Built and maintained loan audit workflows for a non-bank financial services platform. Enabled auditors to verify loan data, review documents, and mark submissions (Pass/Fail/Modify). Ensured compliance, data integrity, and efficient loan processing.",
-      link: "#",
     },
     {
       id: 3,
@@ -34,7 +32,6 @@ export default function Projects() {
       technologies: ["Enterprise stack", "Cloud Architecture", "Real-time Data", "Healthcare APIs"],
       image: "🏥",
       details: "Built cloud-based modules for doctor search, appointment booking, and lab test management. Enabled real-time data sharing to improve care coordination and patient engagement.",
-      link: "#",
     },
     {
       id: 4,
@@ -44,7 +41,6 @@ export default function Projects() {
       technologies: ["Enterprise stack", "Member Management", "Fee Tracking", "Fitness Monitoring"],
       image: "💪",
       details: "Developed features for member registration, fee tracking, and fitness progress monitoring. Managed modules for CrossFit programs, fitness reports, and overall gym activity tracking.",
-      link: "#",
     },
     {
       id: 5,
@@ -54,7 +50,6 @@ export default function Projects() {
       technologies: ["SQL Server", "Analytics", "Reporting", "Data Visualization"],
       image: "📊",
       details: "Created comprehensive reporting and analytics solutions for multi-plant manufacturing operations. Improved operational visibility, production efficiency, and compliance tracking across all facilities.",
-      link: "#",
     },
     {
       id: 6,
@@ -64,7 +59,6 @@ export default function Projects() {
       technologies: ["Enterprise stack", "Data Integration", "Machine APIs", "ETL Processes"],
       image: "🔄",
       details: "Designed and implemented integration layers to capture machine data and synchronized it with enterprise systems. Ensured data accuracy, real-time processing, and seamless workflow automation.",
-      link: "#",
     },
   ];
 
@@ -79,7 +73,7 @@ export default function Projects() {
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap gap-4 mb-12">
-          {["all", "frontend", "backend", "fullstack"].map((category) => (
+          {["all", "backend", "fullstack"].map((category) => (
             <button
               key={category}
               onClick={() => setFilter(category)}
@@ -131,13 +125,7 @@ export default function Projects() {
                   {project.details}
                 </p>
 
-                {/* Link */}
-                <a
-                  href={project.link}
-                  className="inline-block text-blue-400 hover:text-blue-300 font-semibold"
-                >
-                  View Project →
-                </a>
+
               </div>
             </div>
           ))}

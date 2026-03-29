@@ -20,6 +20,11 @@ export default function About() {
     {
       year: "2019-2025",
       title: "Senior Software Engineer at Mitrasoft",
+      description: "Delivered scalable enterprise applications across finance, healthcare, and fitness domains with a focus on performance, security, and data integrity.",
+    },
+    {
+      year: "2025-Present",
+      title: "Senior Software Engineer at InTimeTec",
       description: "Led manufacturing systems, real-time data modules & enterprise applications.",
     },
   ];
@@ -70,7 +75,7 @@ export default function About() {
         <div className="grid md:grid-cols-4 gap-8 mt-12">
           {[
             { number: "6+", label: "Years Experience" },
-            { number: "50+", label: "Enterprise Systems" },
+            { number: "5+", label: "Enterprise Systems" },
             { number: "Global", label: "Clients Served" },
             { number: "100%", label: "Uptime Focus" },
           ].map((stat, index) => (

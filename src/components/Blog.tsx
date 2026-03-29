@@ -4,43 +4,47 @@ export default function Blog() {
   const blogPosts = [
     {
       id: 1,
-      title: "Getting Started with Next.js 15",
+      title: "ColdFusion in Enterprise Applications",
       excerpt:
-        "A comprehensive guide to building modern web applications with Next.js 15 and its latest features.",
-      date: "March 15, 2025",
-      category: "Tutorial",
-      readTime: "8 min read",
-      image: "📝",
+        "How ColdFusion powers large-scale enterprise systems with rapid development, robust database integration, and reliable performance under heavy load.",
+      date: "January 10, 2026",
+      category: "Enterprise",
+      readTime: "9 min read",
+      image: "🏢",
+      link: "https://dev.to/search?q=coldfusion+enterprise",
     },
     {
       id: 2,
-      title: "Best Practices for React Performance",
+      title: "ColdFusion & SQL Server: Best Practices",
       excerpt:
-        "Learn optimization techniques to improve your React application's performance and user experience.",
-      date: "March 10, 2025",
-      category: "Performance",
-      readTime: "12 min read",
-      image: "⚡",
+        "Deep dive into optimizing ColdFusion queries with SQL Server — from stored procedures and cfquery tuning to connection pooling and caching strategies.",
+      date: "December 18, 2025",
+      category: "Database",
+      readTime: "11 min read",
+      image: "🗄️",
+      link: "https://dev.to/search?q=coldfusion+sql+server",
     },
     {
       id: 3,
-      title: "Building RESTful APIs with Node.js",
+      title: "Building REST APIs with ColdFusion",
       excerpt:
-        "Deep dive into creating scalable and maintainable REST APIs using Express and Node.js.",
-      date: "March 5, 2025",
+        "A practical guide to building secure, scalable RESTful APIs using ColdFusion components (CFCs), cffunction tags, and JSON response formatting.",
+      date: "November 25, 2025",
       category: "Backend",
       readTime: "10 min read",
-      image: "🔧",
+      image: "🔌",
+      link: "https://dev.to/search?q=coldfusion+rest+api",
     },
     {
       id: 4,
-      title: "Web Design Trends 2025",
+      title: "Migrating Legacy ColdFusion to Modern Stacks",
       excerpt:
-        "Exploring the latest design trends, animations, and user interface patterns shaping modern web.",
-      date: "February 28, 2025",
-      category: "Design",
-      readTime: "7 min read",
-      image: "🎨",
+        "Strategies for modernizing ColdFusion applications — incremental migration, API-first refactoring, and coexistence patterns with modern front-end frameworks.",
+      date: "October 30, 2025",
+      category: "Architecture",
+      readTime: "13 min read",
+      image: "🔄",
+      link: "https://dev.to/search?q=coldfusion+migration",
     },
   ];
 
@@ -79,7 +83,9 @@ export default function Blog() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-dark-muted">{post.date}</span>
                   <a
-                    href="#"
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-blue-400 hover:text-blue-300 font-semibold"
                   >
                     Read More →
@@ -90,15 +96,6 @@ export default function Blog() {
           ))}
         </div>
 
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <a
-            href="/blog"
-            className="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-          >
-            View All Articles
-          </a>
-        </div>
       </div>
     </section>
   );

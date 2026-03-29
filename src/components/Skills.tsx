@@ -4,19 +4,19 @@ export default function Skills() {
   const skillCategories = [
     {
       category: "Languages",
-      skills: ["JavaScript", "TypeScript", "HTML", "CSS", "SQL"],
+      skills: ["ColdFusion", "JavaScript", "TypeScript", "HTML", "CSS", "SQL"],
     },
     {
       category: "Frameworks & UI",
-      skills: ["REST APIs", "AJAX", "jQuery Core", "jQuery UI", "Component-based UIs"],
+      skills: ["jQuery Core", "jQuery UI", "AJAX", "Component-based UIs", "Bootstrap"],
     },
     {
       category: "Databases & Tools",
-      skills: ["MS SQL Server", "MySQL", "Git", "GitHub", "JIRA", "Trello"],
+      skills: ["MS SQL Server", "MySQL", "REST APIs", "API Development"],
     },
     {
       category: "Development Tools",
-      skills: ["Visual Studio Code", "Postman", "Windows", "API Development"],
+      skills: ["Visual Studio Code", "Postman", "Git", "GitHub", "JIRA", "Trello", "Windows"],
     },
   ];
 

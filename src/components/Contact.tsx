@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { contactEmail, contactPhone } from "@/lib/siteInfo";
+
+const EMAILJS_SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? "";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+const EMAILJS_PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  ?? "";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,25 +17,44 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setLoading(true);
+    setError("");
 
-    // Reset the success message after 5 seconds
-    setTimeout(() => setSubmitted(false), 5000);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:    formData.name,
+          from_email:   formData.email,
+          subject:      formData.subject,
+          message:      formData.message,
+          to_email:     "shanmugavel127@gmail.com",
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitted(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setSubmitted(false), 6000);
+    } catch (err: unknown) {
+      console.error("EmailJS error:", err);
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      setError(`Failed to send: ${msg}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactMethods = [
@@ -110,7 +134,13 @@ export default function Contact() {
           <div>
             {submitted && (
               <div className="mb-4 p-4 bg-green-600/20 border border-green-600 rounded-lg text-green-300">
-                ✓ Thank you! Your message has been sent successfully.
+                ✓ Message sent! I&apos;ll get back to you soon.
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-4 p-4 bg-red-600/20 border border-red-600 rounded-lg text-red-300">
+                ✗ {error}
               </div>
             )}
 
@@ -185,9 +215,10 @@ export default function Contact() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105"
+                disabled={loading}
+                className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
