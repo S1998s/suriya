@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [resumeDownloaded, setResumeDownloaded] = useState(false);
@@ -40,7 +42,7 @@ export default function Navbar() {
           {/* Resume + Back Button */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="/Shanmugavel_Resume.pdf"
+              href={`${basePath}/Shanmugavel_Resume.pdf`}
               download
               onClick={() => {
                 setResumeDownloaded(true);
@@ -101,7 +103,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="/Shanmugavel_Resume.pdf"
+              href={`${basePath}/Shanmugavel_Resume.pdf`}
               download
               onClick={() => {
                 setResumeDownloaded(true);
