@@ -4,9 +4,9 @@ export default function Certifications() {
   const certifications = [
     {
       icon: "https://www.adobe.com/federal/assets/svgs/adobe-logo.svg",
-      title: "Adobe Certified Associate",
+      title: "Adobe Certified Professional",
       issuer: "Adobe Inc.",
-      detail: "Certified expertise in Adobe Creative Cloud and digital marketing technologies, demonstrating proficiency in design and web technologies",
+      detail: "Adobe ColdFusion certification is the industry-recognized validation of one's proficiency in creating dynamic websites using Adobe ColdFusion.",
       date: "2024",
     },
     {
@@ -32,7 +32,18 @@ export default function Certifications() {
               key={index}
               className="bg-dark-surface rounded-xl p-8 border border-dark-border hover:border-blue-400 transition-all duration-300"
             >
-              <div className="text-5xl mb-4">{cert.icon}</div>
+              <div className="mb-4 h-16 w-16 flex items-center justify-center">
+                {typeof cert.icon === "string" && cert.icon.startsWith("http") ? (
+                  <img
+                    src={cert.icon}
+                    alt={cert.title}
+                    className="h-14 w-14 object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="text-5xl">{cert.icon}</div>
+                )}
+              </div>
               <h3 className="text-2xl font-bold text-blue-400 mb-2">
                 {cert.title}
               </h3>
