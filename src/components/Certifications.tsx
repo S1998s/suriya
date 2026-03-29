@@ -3,11 +3,11 @@
 export default function Certifications() {
   const certifications = [
     {
-      icon: "🏆",
-      title: "Professional excellence",
-      issuer: "Industry practice",
-      detail: "Enterprise software delivery, backend architecture, and scalable system design",
-      date: "Ongoing",
+      icon: "https://www.adobe.com/federal/assets/svgs/adobe-logo.svg",
+      title: "Adobe Certified Associate",
+      issuer: "Adobe Inc.",
+      detail: "Certified expertise in Adobe Creative Cloud and digital marketing technologies, demonstrating proficiency in design and web technologies",
+      date: "2024",
     },
     {
       icon: "⭐",
