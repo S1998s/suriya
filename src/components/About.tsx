@@ -72,7 +72,7 @@ export default function About() {
         </div>
 
         {/* Stats */}
-        <div className="grid md:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-12">
           {[
             { number: "6+", label: "Years Experience" },
             { number: "5+", label: "Enterprise Systems" },

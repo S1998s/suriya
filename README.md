@@ -109,7 +109,7 @@ d:\surya/
 │   │   ├── Contact.tsx           # Contact form
 │   │   └── Footer.tsx            # Footer component
 │   └── public/
-│       └── resume.pdf            # Download resume (placeholder)
+│       └── Shanmugavel_Resume.pdf            # Resume PDF
 ├── package.json                  # Dependencies
 ├── tsconfig.json                 # TypeScript config
 ├── tailwind.config.ts            # Tailwind configuration
@@ -137,7 +137,7 @@ Customize colors and theme in [tailwind.config.ts](tailwind.config.ts). The dark
 
 ### Add Resume
 
-1. Place your resume PDF in `public/resume.pdf`
+1. Place your resume PDF in `public/Shanmugavel_Resume.pdf`
 2. Update the download link in the Navbar component
 
 ## 📦 Available Scripts

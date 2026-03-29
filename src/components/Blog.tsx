@@ -54,7 +54,7 @@ export default function Blog() {
         <h2 className="text-4xl font-bold mb-4 text-white">Latest Articles</h2>
         <div className="h-1 w-20 bg-blue-400 mb-12"></div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {blogPosts.map((post) => (
             <article
               key={post.id}

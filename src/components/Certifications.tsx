@@ -67,14 +67,14 @@ export default function Certifications() {
                 key={idx}
                 className="bg-dark-surface rounded-lg p-6 border border-dark-border hover:border-blue-400 transition-all"
               >
-                <div className="flex justify-between mb-3">
+                <div className="flex flex-col sm:flex-row sm:justify-between mb-3 gap-1">
                   <div>
                     <h4 className="text-xl font-bold text-blue-400">
                       {job.position}
                     </h4>
                     <p className="text-white font-semibold">{job.company}</p>
                   </div>
-                  <span className="text-dark-muted text-sm">{job.period}</span>
+                  <span className="text-dark-muted text-sm sm:text-right">{job.period}</span>
                 </div>
                 <ul className="space-y-2">
                   {job.highlights.map((highlight, hIdx) => (

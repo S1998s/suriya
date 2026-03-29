@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold text-blue-400">
-            Yeah It's Me
+            Shanmugavel R.
           </Link>
 
           {/* Desktop Menu */}
@@ -40,7 +40,7 @@ export default function Navbar() {
           {/* Resume + Back Button */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="/resume.pdf"
+              href="/Shanmugavel_Resume.pdf"
               download
               onClick={() => {
                 setResumeDownloaded(true);
@@ -101,7 +101,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="/resume.pdf"
+              href="/Shanmugavel_Resume.pdf"
               download
               onClick={() => {
                 setResumeDownloaded(true);

@@ -72,7 +72,7 @@ export default function Projects() {
         <div className="h-1 w-20 bg-blue-400 mb-12"></div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-4 mb-12">
+        <div className="flex flex-wrap gap-3 mb-8">
           {["all", "backend", "fullstack"].map((category) => (
             <button
               key={category}
@@ -89,7 +89,7 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <div
               key={project.id}

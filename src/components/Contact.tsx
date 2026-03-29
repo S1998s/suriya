@@ -99,7 +99,7 @@ export default function Contact() {
         <h2 className="text-4xl font-bold mb-4 text-white">Get In Touch</h2>
         <div className="h-1 w-20 bg-blue-400 mb-12"></div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Information */}
           <div>
             <p className="text-dark-muted text-lg mb-8">

@@ -19,11 +19,11 @@ export default function Hero() {
       <div className="max-w-4xl mx-auto text-center">
         {/* Main Heading */}
         <div className="mb-8 animate-fadeIn">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4">
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold mb-4">
             <span className="text-white">Hi, I&apos;m</span>{" "}
             <span className="text-blue-400">{professionalName}</span>
           </h1>
-          <p className="text-xl sm:text-2xl text-dark-muted mt-4">
+          <p className="text-base sm:text-xl lg:text-2xl text-dark-muted mt-4">
             {tagline}
           </p>
         </div>
