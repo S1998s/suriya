@@ -7,14 +7,12 @@ export default function Certifications() {
       title: "Adobe Certified Professional",
       issuer: "Adobe Inc.",
       detail: "Adobe ColdFusion certification is the industry-recognized validation of one's proficiency in creating dynamic websites using Adobe ColdFusion.",
-      date: "2024",
     },
     {
       icon: "⭐",
       title: "Best Employee Award",
       issuer: "Mitrasoft",
       detail: "Recognized for high performance, productivity, and consistent contribution to team success",
-      date: "Award",
     },
   ];
 
