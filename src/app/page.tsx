@@ -43,7 +43,7 @@ export default function Landing() {
               <div 
                 className="absolute inset-0 bg-cover bg-center rounded-full flex items-center justify-center shadow-2xl shadow-cyan-500/50 border-2 border-cyan-400 group-hover:border-cyan-300 transition-all"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, rgba(6, 182, 212, 0.8) 0%, rgba(3, 105, 161, 0.8) 100%), url(/surya.github.io/images/red-pill.jpg)',
+                  backgroundImage: 'linear-gradient(135deg, rgba(6, 182, 212, 0.8) 0%, rgba(3, 105, 161, 0.8) 100%), url(/surya/images/red-pill.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}
@@ -77,7 +77,7 @@ export default function Landing() {
               <div 
                 className="absolute inset-0 bg-cover bg-center rounded-full flex items-center justify-center shadow-2xl shadow-pink-500/50 border-2 border-pink-400 group-hover:border-pink-300 transition-all"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, rgba(236, 72, 153, 0.8) 0%, rgba(220, 38, 38, 0.8) 100%), url(/surya.github.io/images/red-pill.jpg)',
+                  backgroundImage: 'linear-gradient(135deg, rgba(236, 72, 153, 0.8) 0%, rgba(220, 38, 38, 0.8) 100%), url(/surya/images/red-pill.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}
