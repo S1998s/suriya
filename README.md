@@ -1,4 +1,4 @@
-# Portfolio Website - Shanmugavel Surya
+# Portfolio Website - Shanmugavel Suriya
 
 A modern, highly performant, and visually stunning portfolio website built with **Next.js 15**, **TypeScript**, and **Tailwind CSS**. Features a beautiful dark theme with smooth animations and a responsive design that works seamlessly across all devices.
 
@@ -198,7 +198,7 @@ This project is open source and available under the MIT License.
 
 ## 👤 Author
 
-**Shanmugavel Surya**
+**Shanmugavel Suriya**
 - Portfolio: [https://surya.dev](https://surya.dev)
 - Email: shanmugavel127.com
 - GitHub: [@suryar](https://github.com/suryar)
@@ -211,4 +211,4 @@ This project is open source and available under the MIT License.
 
 ---
 
-**Made with ❤️ by Shanmugavel Surya**
+**Made with ❤️ by Shanmugavel Suriya**

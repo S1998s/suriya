@@ -1,6 +1,6 @@
 # Portfolio Website Development
 
-This is a Next.js-based portfolio website for Shanmugavel Surya with dark theme, featuring all modern web components.
+This is a Next.js-based portfolio website for Shanmugavel Suriya with dark theme, featuring all modern web components.
 
 ## Project Setup Progress
 

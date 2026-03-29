@@ -1,7 +1,7 @@
 {
   "name": "portfolio-website",
   "version": "1.0.0",
-  "description": "Professional portfolio website for Shanmugavel Surya",
+  "description": "Professional portfolio website for Shanmugavel Suriya",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

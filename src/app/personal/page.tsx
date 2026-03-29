@@ -544,7 +544,7 @@ export default function PersonalPage() {
                   💗
                 </motion.span>
               )}{" "}
-              by Shanmugavel Surya
+              by Shanmugavel Suriya
             </p>
             <p className="mt-4 font-bold text-lime-300 drop-shadow-md">
               © {new Date().getFullYear()} — The Chaotic Corner of the Internet 🌈
