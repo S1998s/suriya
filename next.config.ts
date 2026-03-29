@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
-const basePath = isProd ? "/suriya" : "";
+// Use GitHub Pages basePath only when explicitly building for GitHub Pages
+// For custom domains or other deployments, use empty basePath (root)
+const basePath = isProd && process.env.DEPLOY_TARGET === "github-pages" ? "/suriya" : "";
 
 const nextConfig: NextConfig = {
   output: 'export',
