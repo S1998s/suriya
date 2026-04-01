@@ -11,19 +11,10 @@ export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [resumeDownloaded, setResumeDownloaded] = useState(false);
 	const [showResumeModal, setShowResumeModal] = useState(false);
-	const [resumeViewerSrc, setResumeViewerSrc] = useState(resumeUrl);
 
 	const handleResumeClick = () => {
 		setShowResumeModal(true);
 	};
-
-	useEffect(() => {
-		if (!showResumeModal) return;
-
-		const resumePath = resumeUrl;
-		// Use direct PDF iframe on all devices for reliability.
-		setResumeViewerSrc(resumePath);
-	}, [showResumeModal]);
 
 	useEffect(() => {
 		if (!showResumeModal) return;
@@ -190,17 +181,50 @@ export default function Navbar() {
 							</button>
 						</div>
 
-						{/* PDF Viewer */}
-						<div className="flex flex-1 min-h-0 overflow-hidden bg-dark-muted/20">
+						{/* PDF Viewer — large screens only */}
+						<div className="hidden lg:flex flex-1 min-h-0 overflow-hidden bg-dark-muted/20">
 							<iframe
-								src={resumeViewerSrc}
+								src={resumeUrl}
 								className="w-full h-full border-0"
 								title="Resume"
 							/>
 						</div>
 
-						{/* Footer */}
-						<div className="flex items-center justify-end gap-3 p-2 sm:p-3 border-t border-dark-border bg-dark-muted/10 shrink-0">
+						{/* Mobile/Tablet Fallback */}
+						<div className="flex lg:hidden flex-1 flex-col items-center justify-center gap-6 px-8">
+							<svg className="w-24 h-24 text-blue-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+									d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+							</svg>
+							<div className="text-center">
+								<p className="text-white font-semibold mb-1">Shanmugavel_Resume.pdf</p>
+								<p className="text-dark-muted text-sm">PDF preview isn&apos;t supported on mobile browsers.</p>
+							</div>
+							<div className="flex flex-col w-full gap-3">
+								<a
+									href={resumeUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center font-medium"
+								>
+									Open in Browser
+								</a>
+								<a
+									href={resumeUrl}
+									download="Shanmugavel_Resume.pdf"
+									onClick={() => {
+										setResumeDownloaded(true);
+										localStorage.setItem("resumeDownloaded", "true");
+									}}
+									className="w-full px-6 py-3 border border-blue-400 text-blue-400 rounded-lg hover:text-white hover:bg-blue-700 transition-colors text-center font-medium"
+								>
+									Download
+								</a>
+							</div>
+						</div>
+
+						{/* Footer — large screens only */}
+						<div className="hidden lg:flex items-center justify-end gap-3 p-2 sm:p-3 border-t border-dark-border bg-dark-muted/10 shrink-0">
 							<button
 								onClick={() => setShowResumeModal(false)}
 								className="px-4 py-2 border border-dark-border text-dark-muted rounded-lg hover:bg-dark-border transition-colors"
