@@ -39,8 +39,12 @@ export default function Photos() {
   const years = photos
     .map((photo) => Number(photo.date))
     .filter((year) => Number.isFinite(year));
+  const hasChildhoodMoments = photos.some((photo) => photo.category.toLowerCase() === "childhood");
+  const latestYear = years.length > 0 ? Math.max(...years) : new Date().getFullYear();
   const capturedRange =
     years.length > 0 ? `${Math.min(...years)}-${Math.max(...years)}` : `${new Date().getFullYear()}`;
+  const timelineValue = hasChildhoodMoments ? "Lifelong" : capturedRange;
+  const timelineHelper = hasChildhoodMoments ? `Through ${latestYear}` : "Timeline covered";
 
   const close = useCallback(() => setSelectedPhoto(null), []);
 
@@ -165,7 +169,7 @@ export default function Photos() {
               {[
                 { label: "📸 Total Photos", value: photoCount, helper: "Moments captured" },
                 { label: "🎨 Collections", value: collectionCount, helper: "Story categories" },
-                { label: "📅 Captured", value: capturedRange, helper: "Timeline covered" },
+                { label: "📅 Captured", value: timelineValue, helper: timelineHelper },
                 { label: "💭 Vibes", value: "∞", helper: "Memories that last" },
               ].map((stat, idx) => (
                 <motion.div
@@ -177,7 +181,13 @@ export default function Photos() {
                   transition={{ delay: reduce ? 0 : idx * 0.08, duration: 0.45, ease }}
                   whileHover={reduce ? undefined : { y: -4, scale: 1.02 }}
                 >
-                  <div className="leading-none text-4xl font-black text-lime-300 drop-shadow-md sm:text-6xl">{stat.value}</div>
+                  <div
+                    className={`max-w-full break-words px-1 text-center font-black text-lime-300 drop-shadow-md ${
+                      String(stat.value).length > 4 ? "text-2xl leading-tight sm:text-4xl" : "text-4xl leading-none sm:text-6xl"
+                    }`}
+                  >
+                    {stat.value}
+                  </div>
                   <p className="mt-3 text-sm font-black text-white drop-shadow-md sm:text-lg">{stat.label}</p>
                   <p className="mt-1 text-xs font-semibold text-white/85 sm:text-sm">{stat.helper}</p>
                 </motion.div>

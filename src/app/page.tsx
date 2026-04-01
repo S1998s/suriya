@@ -34,7 +34,7 @@ export default function Landing() {
       <div className="relative z-10 max-w-6xl mx-auto text-center w-full">
         {/* Intro Section */}
         <div className="mb-8 sm:mb-12 animate-fadeIn px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black mb-4 sm:mb-6 text-white drop-shadow-2xl leading-tight">
+          <h1 className="mt-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black mb-4 sm:mb-6 text-white drop-shadow-2xl leading-tight">
             <span className="text-cyan-400">{personalName.split(" ")[0]}</span> <span className="text-white">{professionalName.split(" ")[1] ?? personalName.split(" ")[1]}</span>
           </h1>
           <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-cyan-500 to-pink-500 mx-auto my-6 sm:my-8 rounded-full"></div>
@@ -122,7 +122,7 @@ export default function Landing() {
         </div>
 
         {/* Bottom Philosophy */}
-        <div className="mt-16 pt-8 border-t border-cyan-900/50 px-4">
+        <div className="mt-8 mb-8 pt-8 border-t border-cyan-900/50 px-4">
           <p className="text-cyan-400 text-sm drop-shadow-lg">
             Choose one path. Explore everything. Discover yourself.
           </p>

@@ -47,9 +47,6 @@ export default function Certifications() {
               </h3>
               <p className="text-white font-semibold mb-2">{cert.issuer}</p>
               <p className="text-dark-muted mb-4">{cert.detail}</p>
-              <div className="text-sm text-dark-muted border-t border-dark-border pt-4">
-                {cert.date}
-              </div>
             </div>
           ))}
         </div>
