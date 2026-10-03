@@ -18,9 +18,9 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="assets/vintage.css?v=9">
+	<link rel="stylesheet" href="assets/vintage.css?v=14">
 	<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-	<script defer src="assets/vintage.js?v=7"></script>
+	<script defer src="assets/vintage.js?v=13"></script>
 </head>
 <body>
 	<a class="skip-link" href="#professional">Skip to content</a>
@@ -53,12 +53,12 @@
 					<li><span class="itinerary-place">Bangalore</span><span class="itinerary-note">A city still unfolding</span></li>
 				</ol>
 				<div class="journey-paths">
-					<a class="journey-label" href="professional/">
+					<a class="journey-label" id="professional-chapter" href="professional/">
 						<span class="path-number">Chapter I</span>
 						<span class="path-title">Professional Journey</span>
 						<span class="path-note">The things I build <span aria-hidden="true">&rarr;</span></span>
 					</a>
-					<a class="journey-label" href="personal/">
+					<a class="journey-label" id="personal-chapter" href="personal/">
 						<span class="path-number">Chapter II</span>
 						<span class="path-title">Personal Journey</span>
 						<span class="path-note">The moments I keep <span aria-hidden="true">&rarr;</span></span>
@@ -76,7 +76,7 @@
 			<div class="section-wrap">
 				<div class="chapter-heading reveal">
 					<span class="chapter-mark" aria-hidden="true">I</span>
-					<div><p class="eyebrow">The professional journey</p><h2 id="professional-title">Work with purpose.<br><em>Built to endure.</em></h2></div>
+					<div><div class="chapter-connection"><p>Chapter I &middot; Professional Journey</p><a href="#professional-chapter"><span aria-hidden="true">&larr;</span> Return to the full chapter view</a></div><h2 id="professional-title">Work with purpose.<br><em>Built to endure.</em></h2></div>
 					<p class="section-intro">I am a senior software engineer with 7+ years of experience, turning complex problems into dependable systems. From factory floors to financial workflows, my work is about making the everyday run a little better.</p>
 				</div>
 				<div class="career-layout">
@@ -116,7 +116,7 @@
 			<div class="section-wrap">
 				<div class="chapter-heading reveal">
 					<span class="chapter-mark" aria-hidden="true">II</span>
-					<div><p class="eyebrow">The personal journey</p><h2 id="personal-title">Away from the desk.<br><em>Closer to life.</em></h2></div>
+					<div><div class="chapter-connection"><p>Chapter II &middot; Personal Journey</p><a href="#personal-chapter"><span aria-hidden="true">&larr;</span> Return to the full chapter view</a></div><h2 id="personal-title">Away from the desk.<br><em>Closer to life.</em></h2></div>
 					<p class="section-intro">Beyond the work, there is Suriya. Family photographs, time on the cricket field, and the small, unhurried moments that become the stories worth keeping.</p>
 				</div>
 				<div class="memory-grid">

@@ -9,6 +9,54 @@
   const constrainedConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType);
   let userPaused = false;
   let playRequested = false;
+  let chapterReturn = 0;
+  let chapterAnimation;
+  const chapterCards = document.querySelector('.journey-paths');
+  let cardsVisible = true;
+  const updateCardMotion = () => {
+    chapterCards.classList.toggle('is-resting', !cardsVisible || document.hidden);
+  };
+  const cardObserver = new IntersectionObserver(entries => {
+    cardsVisible = entries[0].isIntersecting;
+    updateCardMotion();
+  }, { threshold: .15 });
+  cardObserver.observe(chapterCards);
+  document.addEventListener('visibilitychange', updateCardMotion);
+
+  document.querySelectorAll('.chapter-connection a').forEach(link => {
+    link.addEventListener('click', event => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      event.preventDefault();
+      const request = ++chapterReturn;
+      chapterAnimation?.cancel();
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      target.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'center' });
+      if (reducedMotion.matches) return;
+      let previousPosition = target.getBoundingClientRect().top;
+      let stableFrames = 0;
+      const started = performance.now();
+      const settle = () => {
+        if (request !== chapterReturn || reducedMotion.matches) return;
+        const position = target.getBoundingClientRect().top;
+        stableFrames = Math.abs(position - previousPosition) < .5 ? stableFrames + 1 : 0;
+        previousPosition = position;
+        if (stableFrames < 5 && performance.now() - started < 2000) {
+          requestAnimationFrame(settle);
+          return;
+        }
+        chapterAnimation = target.animate([
+          { transform: 'none', boxShadow: '3px 3px 0 rgba(93,67,37,.12)' },
+          { transform: 'translateY(-6px) rotate(-.8deg)', boxShadow: '8px 10px 14px rgba(93,67,37,.18)', offset: .35 },
+          { transform: 'none', boxShadow: '3px 3px 0 rgba(93,67,37,.12)' }
+        ], { duration: 900, easing: 'ease-in-out' });
+      };
+      requestAnimationFrame(settle);
+    });
+  });
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) chapterAnimation?.cancel();
+  });
 
   function updateToggle() {
     const playing = !video.paused;
