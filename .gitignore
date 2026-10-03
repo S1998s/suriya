@@ -6,13 +6,8 @@ node_modules/
 # Testing
 /coverage
 
-# Next.js
-/.next/
-/out/
-
-# Production
-/build
-/dist
+# Static Pages build artifact
+/_site/
 
 # Misc
 .DS_Store

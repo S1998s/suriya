@@ -1,37 +1,22 @@
-# Portfolio Website Development
+# Portfolio Site Guidance
 
-This is a Next.js-based portfolio website for Shanmugavel Suriya with dark theme, featuring all modern web components.
+This repository publishes a static HTML, CSS, and JavaScript portfolio through GitHub Pages. There is no Next.js application or npm dependency tree.
 
-## Project Setup Progress
+## Important Paths
 
-- [x] Create copilot-instructions.md file
-- [x] Scaffold Next.js project structure
-- [ ] Create layout and component files
-- [ ] Build home/hero section
-- [ ] Build projects showcase component
-- [ ] Build about and skills sections
-- [ ] Create blog functionality
-- [ ] Create contact form
-- [ ] Add resume download feature
-- [ ] Setup Tailwind CSS & dark theme
-- [ ] Install dependencies and compile
-- [ ] Create README documentation
+- `index.html` and `static-pages/`: published pages and their content.
+- `assets/`: shared styling, scripts, portrait branding, and artwork.
+- `public/images/personal/`: original personal photos plus the explicitly packaged AVIF variants.
+- `Animations/`: mobile and desktop hero videos.
+- `scripts/build-static.mjs`: creates the disposable `_site` deployment folder.
+- `scripts/validate-static.py`: validates the packaged HTML, local links, image alternatives, assets, and videos.
+- `.github/workflows/deploy.yml`: validates and publishes `_site` to GitHub Pages.
 
-## Project Stack
+## Working Rules
 
-- **Framework**: Next.js 14+ with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with dark theme
-- **Build Tool**: Turbopack
-- **Package Manager**: npm
-
-## Features
-
-- Home/Hero section with smooth animations
-- Projects showcase with filtering and details
-- About me section with timeline
-- Technical skills with categorization
-- Blog with markdown support
-- Contact form with validation
-- Resume/CV download functionality
-- Responsive dark theme design
+- Preserve the supplied portrait in `public/logo.png`; `assets/portrait-mark.png` and `assets/favicon-photo.png` are its derived site-wide marks.
+- Preserve all content, custom-domain configuration in `CNAME`, source photographs, résumé, and both hero videos.
+- Keep the builder's photo allowlist synchronized with image paths used by the pages. It packages only selected 640/1200 AVIF files plus `candid-1__w960.avif`.
+- Do not add credentials or environment files to the static build. The site has no server-side form handler.
+- Retain the CSP, Referrer Policy, Subresource Integrity for the GSAP CDN script, and least-privilege workflow permissions when editing security-sensitive markup or deployment settings.
+- Validate changes with `node scripts/build-static.mjs` and `python scripts/validate-static.py _site`; syntax-check both `assets/vintage.js` and `assets/chapters.js`.
