@@ -84,7 +84,7 @@ for page in pages:
             asset_path = page.parent / parsed.path
         if not asset_path.is_file():
             page_errors.append(f"{relative_page}: missing asset {asset}")
-for video in ("WebView.mp4", "MobileView.mp4"):
+for video in ("WebView.mp4", "FinalMobileView.mp4"):
     if not (root / "Animations" / video).is_file():
         page_errors.append(f"Missing responsive video: {video}")
 for page, parser in documents.items():

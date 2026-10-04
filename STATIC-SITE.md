@@ -10,7 +10,7 @@ Build the Pages export and serve `_site` locally. The source root is not the dep
 
 ## Media
 
-Desktop uses `Animations/WebView.mp4`; screens at 700px and below use `Animations/MobileView.mp4`. Only the selected MP4 is loaded, after the page load event and an idle opportunity so it does not compete with the first screen's assets. Playback is muted, looped, and inline, with a pause control and page-visibility handling. Both supplied H.264 videos were verified in the hosted browser preview. Browsers without support for these videos display the matching static illustration.
+Desktop uses `Animations/WebView.mp4`; screens at 900px and below use the supplied `Animations/FinalMobileView.mp4`. Only the selected MP4 is loaded, after the page load event and an idle opportunity so it does not compete with the first screen's assets. Playback is muted, looped, and inline, with a pause control and page-visibility handling. Browsers without support for these videos display the matching static illustration.
 
 `assets/panorama-desktop.jpg` and `assets/panorama-mobile.jpg` are exact first-frame posters extracted from the supplied videos. The separately attached panorama was not present as a local image file. To use that original still instead, replace the desktop JPEG and update its dimensions in the HTML.
 

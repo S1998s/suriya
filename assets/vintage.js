@@ -3,7 +3,7 @@
 
   const video = document.querySelector('.hero-film');
   const toggle = document.querySelector('.film-toggle');
-  const mobile = window.matchMedia('(max-width: 700px)');
+  const mobile = window.matchMedia('(max-width: 900px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const connection = navigator.connection;
   const constrainedConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType);
@@ -78,7 +78,7 @@
     video.pause();
     video.classList.remove('is-playing');
     const poster = mobile.matches ? 'assets/panorama-mobile.webp' : 'assets/panorama-desktop.webp';
-    const source = mobile.matches ? 'Animations/MobileView.mp4' : 'Animations/WebView.mp4';
+    const source = mobile.matches ? 'Animations/FinalMobileView.mp4' : 'Animations/WebView.mp4';
     video.poster = poster;
     if ((reducedMotion.matches || constrainedConnection) && !playRequested) {
       video.removeAttribute('src');
