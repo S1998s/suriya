@@ -77,7 +77,7 @@
   function selectFilm() {
     video.pause();
     video.classList.remove('is-playing');
-    const poster = mobile.matches ? 'assets/panorama-mobile.webp' : 'assets/panorama-desktop.webp';
+    const poster = mobile.matches ? 'assets/panorama-mobile.webp?v=2' : 'assets/panorama-desktop.webp';
     const source = mobile.matches ? 'Animations/FinalMobileView.mp4' : 'Animations/WebView.mp4';
     video.poster = poster;
     if ((reducedMotion.matches || constrainedConnection) && !playRequested) {
@@ -127,7 +127,8 @@
     if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1500 });
     else window.setTimeout(start, 200);
   }
-  if (document.readyState === 'complete') startFilmWhenIdle();
+  if (mobile.matches) selectFilm();
+  else if (document.readyState === 'complete') startFilmWhenIdle();
   else window.addEventListener('load', startFilmWhenIdle, { once: true });
 
   document.getElementById('year').textContent = new Date().getFullYear();

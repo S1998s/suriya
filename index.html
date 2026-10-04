@@ -18,9 +18,9 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="assets/vintage.css?v=30">
+	<link rel="stylesheet" href="assets/vintage.css?v=34">
 	<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-	<script defer src="assets/vintage.js?v=15"></script>
+	<script defer src="assets/vintage.js?v=16"></script>
 </head>
 <body>
 	<a class="skip-link" href="#professional">Skip to content</a>
@@ -36,8 +36,8 @@
 	<main>
 		<section class="hero" id="home" aria-labelledby="hero-title">
 			<picture class="hero-poster" aria-hidden="true">
-				<source media="(max-width: 700px)" type="image/webp" srcset="assets/panorama-mobile.webp">
-				<source media="(max-width: 700px)" srcset="assets/panorama-mobile.jpg">
+				<source media="(max-width: 900px)" type="image/webp" srcset="assets/panorama-mobile.webp?v=2">
+				<source media="(max-width: 900px)" srcset="assets/panorama-mobile.jpg?v=2">
 				<source type="image/webp" srcset="assets/panorama-desktop.webp">
 				<img src="assets/panorama-desktop.jpg" alt="" fetchpriority="high" width="1920" height="1080">
 			</picture>
@@ -66,9 +66,8 @@
 				</div>
 			</div>
 			<div class="hero-bottom">
-				<span>From the first hills to a new skyline</span>
-				<a href="#professional" class="turn-page">Turn the page <span aria-hidden="true">&darr;</span></a>
 				<button class="film-toggle" type="button" aria-label="Play background animation" aria-pressed="false" title="Play background animation"><span data-lucide="play" aria-hidden="true">&gt;</span></button>
+				<a href="#professional" class="turn-page">Turn the page <span aria-hidden="true">&darr;</span></a>
 			</div>
 		</section>
 
