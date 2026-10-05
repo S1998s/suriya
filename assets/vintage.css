@@ -548,6 +548,8 @@ body.dialog-open { overflow: hidden; }
   .hero h1 { font-size: 42px; }
 }
 @media (max-width: 600px) {
+  .chapter h2, .chapter-page h1, .chapter-page h2 { line-height: 1.24; }
+  .chapter h2 br + em, .chapter-page h1 br + em, .chapter-page h2 br + em { display: inline-block; margin-top: .18em; }
   .site-header {
     display: flex;
     align-items: flex-start;
