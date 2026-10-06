@@ -254,7 +254,7 @@
       return;
     }
     if (type === 'timeline') {
-      if (!canScrollAnimate || isMobile) element.classList.add('is-drawn');
+      if (!canScrollAnimate) element.classList.add('is-drawn');
       animateGroup(element.children, { y: 13, stagger: 0.11, duration: 0.62 });
       return;
     }
@@ -444,7 +444,6 @@
 
     document.querySelectorAll('.timeline, .story-timeline').forEach(timeline => {
       timeline.classList.add('motion-line');
-      if (isMobile) return;
       gsap.set(timeline, { '--motion-progress': 0 });
       createScrubbedMotion(timeline, { '--motion-progress': 0 }, { '--motion-progress': 1 }, {
         trigger: timeline,
