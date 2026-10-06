@@ -286,13 +286,23 @@
     }
     if (type === 'cover-photo') {
       if (!canAnimate) return;
+      const image = element.querySelector('.personal-cover-image img');
+      const sweep = element.querySelector('.personal-photo-sweep');
       const caption = element.querySelector('figcaption');
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
       timeline.fromTo(element,
-        { clipPath: 'inset(46% 0 46% 0)', y: 18, rotation: -1.5, scale: .975, transformOrigin: '50% 48%' },
-        { clipPath: 'inset(0% 0 0% 0)', y: 0, rotation: 1, scale: 1, duration: 1.08 * durationScale, clearProps: 'clipPath,transform' },
+        { autoAlpha: 0, y: 14, rotation: -2, scale: .985, transformOrigin: '50% 48%' },
+        { autoAlpha: 1, y: 0, rotation: 1, scale: 1, duration: .82 * durationScale, clearProps: 'opacity,visibility,transform' },
         0);
-      if (caption) timeline.from(caption.children, { autoAlpha: 0, y: 7, stagger: .09, duration: .48 * durationScale, clearProps: 'opacity,visibility,transform' }, .54);
+      if (image) timeline.fromTo(image,
+        { scale: 1.08, filter: 'grayscale(.82) sepia(.32) saturate(.55) brightness(.84) blur(5px)' },
+        { scale: 1, filter: 'grayscale(0) sepia(.1) saturate(.86) brightness(1) blur(0px)', duration: 1.32 * durationScale, ease: 'power2.out', clearProps: 'transform,filter' },
+        .06);
+      if (sweep) timeline.fromTo(sweep,
+        { yPercent: -125, autoAlpha: 0 },
+        { yPercent: 420, autoAlpha: .82, duration: 1.12 * durationScale, ease: 'power1.inOut', clearProps: 'opacity,visibility,transform' },
+        .12);
+      if (caption) timeline.from(caption.children, { autoAlpha: 0, y: 8, stagger: .08, duration: .42 * durationScale, clearProps: 'opacity,visibility,transform' }, .72 * durationScale);
       track(timeline);
       return;
     }
@@ -462,7 +472,7 @@
       });
     });
 
-    document.querySelectorAll('.journal-frame, .personal-cover-photo img').forEach((frame, index) => {
+    document.querySelectorAll('.journal-frame, .personal-cover-image img').forEach((frame, index) => {
       if (isMobile) return;
       createScrubbedMotion(frame, { y: index % 2 ? 7 : 10 }, { y: index % 2 ? -7 : -10 }, {
         trigger: frame,

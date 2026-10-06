@@ -194,7 +194,9 @@ body.dialog-open { overflow: hidden; }
 .personal-cover-signature span { color: var(--gold); font-size: 12px; }
 .personal-cover-photo { position: relative; max-width: 430px; justify-self: end; padding: 11px 11px 13px; border: 1px solid #caba9b; background: var(--paper-light); box-shadow: 4px 6px 0 rgba(91,67,40,.09); transform: rotate(1deg); }
 .personal-cover-photo::before { position: absolute; top: -10px; left: 50%; z-index: 1; width: 68px; height: 18px; content: ''; transform: translateX(-50%) rotate(-2deg); border-inline: 1px solid rgba(163,140,102,.45); background: rgba(222,205,169,.58); }
-.personal-cover-photo img { width: 100%; height: clamp(260px, 34vw, 370px); object-fit: cover; object-position: center 38%; filter: sepia(.1) saturate(.86); }
+.personal-cover-image { position: relative; display: block; overflow: hidden; }
+.personal-cover-image img { width: 100%; height: clamp(260px, 34vw, 370px); object-fit: cover; object-position: center 38%; filter: sepia(.1) saturate(.86); }
+.personal-photo-sweep { position: absolute; top: 0; left: 0; width: 100%; height: 32%; opacity: 0; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(255,246,215,.08) 22%, rgba(255,246,215,.68) 50%, rgba(255,246,215,.1) 78%, transparent); filter: blur(8px); }
 .personal-cover-photo figcaption { display: flex; justify-content: space-between; gap: 12px; padding: 10px 3px 0; color: var(--muted); font: italic 13px/1.3 var(--serif); }
 .personal-cover-photo figcaption span:first-child { color: var(--terracotta); font: 8px/1.4 var(--sans); }
 .personal .place-thread { padding-top: 27px; padding-bottom: 24px; }
@@ -391,7 +393,7 @@ body.dialog-open { overflow: hidden; }
   .personal-cover-lede { margin-top: 12px; font-size: 17px; line-height: 1.45; }
   .personal-cover-signature { margin-top: 11px; font-size: 15px; }
   .personal-cover-photo { width: min(100%, 400px); justify-self: center; }
-  .personal-cover-photo img { height: clamp(190px, 62vw, 270px); }
+  .personal-cover-image img { height: clamp(190px, 62vw, 270px); }
   .personal-cover-photo figcaption { font-size: 12px; }
   .personal .place-thread { padding-top: 22px; padding-bottom: 20px; }
   .personal .chapter-body { padding-top: 32px; }
