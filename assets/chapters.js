@@ -95,6 +95,7 @@
       return button;
     });
     const renderPhotos = () => {
+      window.portfolioMotion?.unobserveAll(grid.querySelectorAll('.photo-open'));
       grid.replaceChildren();
       const visible = photos.filter(photo => (selected === 'All' || photo.category === selected) && (selected !== 'Transformation' || selectedPhase === 'All' || photo.phase === selectedPhase));
       count.textContent = `${visible.length} ${visible.length === 1 ? 'photograph' : 'photographs'} · ${selected === 'All' ? 'all collections' : selected}`;
@@ -115,27 +116,9 @@
         grid.append(button);
       });
       buttons.forEach(button => button.setAttribute('aria-pressed', String(button.textContent === selected)));
+      window.portfolioMotion?.observeAll(grid.querySelectorAll('.photo-open'), 'photo');
     };
     renderPhotos();
-  }
-
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (window.gsap && !reducedMotion.matches) {
-    const animations = new Set();
-    const intro = document.querySelector('.chapter-intro-inner, .personal-cover-inner');
-    if (intro) animations.add(window.gsap.from(intro, { opacity: 0, y: 16, duration: 1, ease: 'power2.out', clearProps: 'all' }));
-    const observer = new IntersectionObserver(entries => {
-      entries.filter(entry => entry.isIntersecting).forEach(entry => {
-        animations.add(window.gsap.from(entry.target, { opacity: 0, y: 14, duration: .8, ease: 'power2.out', clearProps: 'all' }));
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: .1 });
-    document.querySelectorAll('.place-thread-list li, .story-section, .journal-frame, .story-photo').forEach(element => observer.observe(element));
-    reducedMotion.addEventListener('change', () => {
-      if (!reducedMotion.matches) return;
-      observer.disconnect();
-      animations.forEach(animation => animation.progress(1));
-    });
   }
 
   const dialog = document.querySelector('.photo-dialog');
@@ -151,6 +134,7 @@
     fullImage.alt = thumbnail?.alt || button.dataset.caption || 'Personal photograph';
     dialog.showModal();
     document.body.classList.add('dialog-open');
+    window.portfolioMotion?.revealDialogPhoto(fullImage, button.dataset.image);
   });
   dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
   document.addEventListener('keydown', event => {
@@ -164,6 +148,7 @@
   });
   dialog.addEventListener('close', () => {
     document.body.classList.remove('dialog-open');
+    window.portfolioMotion?.closeDialogPhoto();
     previousButton?.focus({ preventScroll: true });
   });
 })();

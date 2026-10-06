@@ -12,6 +12,9 @@ Audit date: October 3, 2026. Tested the generated static site at
 - Added 16 static gallery thumbnails and full-image links for script-failure fallback.
 - Added the gallery footer's home link and accurately labeled DEV search destinations.
 - Versioned shared styles and scripts so existing visitors receive the repairs.
+- Consolidated hero, section, chapter and gallery reveals in the shared GSAP motion controller.
+- Added the opening title sequence, drawn career timeline, distinct memory-photo reveals, active-section navigation, and a brief photo-dialog entrance.
+- Kept reduced-motion, hidden-tab, offscreen-card and Data Saver behavior in the motion/performance checks; no animation dependency was added.
 
 ## Passed Checks
 
@@ -30,6 +33,13 @@ Audit date: October 3, 2026. Tested the generated static site at
 - Functional pages when external fonts and GSAP are blocked.
 - Static gallery remains usable when scripts are blocked.
 - No JavaScript console errors or warnings in the normal final four-page sweep.
+- Motion system checks: hero entrance settles, timelines draw once, projects still toggle, gallery filters can be repeated, modal controls work, and rapid scrolling leaves no hidden copy.
+- Reduced-motion and GSAP-blocked checks leave headings and gallery fallback content visible.
+- ScrollTrigger choreography verified without pinning: hero depth, journey path progress, timeline progression, photo drift and active-skill states.
+- Selected-photo WebGL displacement initializes only in the opened desktop dialog and is disposed when the dialog closes; unsupported WebGL, mobile and constrained-motion/data paths fall back to a GSAP reveal or the original image.
+- ScrollTrigger integration uses the already pinned GSAP 3.12.5 CDN and SRI; no npm dependency tree, Lenis, Three.js or site-wide WebGL layer was added. Scrubbed effects do not pin sections.
+- ScrollTrigger progress and active milestone states respond while scrolling; changing to reduced motion kills all registered scroll triggers and leaves content visible.
+- WebGL-unavailable and mobile photo-dialog fallback retains the original image and closes normally; repeated gallery filter renders remain functional.
 - Source portrait, original photographs, resume, videos and custom domain preserved.
 - Private environment files and the generated `_site` artifact remain ignored.
 
@@ -55,3 +65,6 @@ Actions deployment itself must run after pushing. LinkedIn blocks automated prof
 email, telephone and WhatsApp targets were inspected without sending messages or making calls.
 GitHub, Instagram and all four DEV search URLs responded successfully during this audit.
 The DEV cards intentionally link to topic searches, not individual article permalinks.
+The requested Codrops reference pages returned HTTP 403 to the research fetcher, so they were
+not copied or treated as implementation dependencies; the accessible official GSAP
+ScrollTrigger documentation informed the no-pin scrub design.

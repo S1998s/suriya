@@ -11,17 +11,6 @@
   let playRequested = false;
   let chapterReturn = 0;
   let chapterAnimation;
-  const chapterCards = document.querySelector('.journey-paths');
-  let cardsVisible = true;
-  const updateCardMotion = () => {
-    chapterCards.classList.toggle('is-resting', !cardsVisible || document.hidden);
-  };
-  const cardObserver = new IntersectionObserver(entries => {
-    cardsVisible = entries[0].isIntersecting;
-    updateCardMotion();
-  }, { threshold: .15 });
-  cardObserver.observe(chapterCards);
-  document.addEventListener('visibilitychange', updateCardMotion);
 
   document.querySelectorAll('.chapter-connection a').forEach(link => {
     link.addEventListener('click', event => {
@@ -142,6 +131,7 @@
       photograph.alt = button.querySelector('img').alt;
       dialog.showModal();
       document.body.classList.add('dialog-open');
+      window.portfolioMotion?.revealDialogPhoto(photograph, button.dataset.image);
     });
   });
   document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
@@ -157,25 +147,8 @@
   });
   dialog.addEventListener('close', () => {
     document.body.classList.remove('dialog-open');
+    window.portfolioMotion?.closeDialogPhoto();
     if (lastPhotoButton) lastPhotoButton.focus({ preventScroll: true });
   });
 
-  if (window.gsap && !reducedMotion.matches) {
-    const intro = window.gsap.from('.hero-content > *', { opacity: 0, y: 16, duration: 1.3, stagger: .16, ease: 'power2.out', clearProps: 'all' });
-    const animations = new Set([intro]);
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const animation = window.gsap.from(entry.target, { opacity: 0, y: 22, duration: 1.1, ease: 'power2.out', clearProps: 'all' });
-        animations.add(animation);
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: .12 });
-    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
-    reducedMotion.addEventListener('change', () => {
-      if (!reducedMotion.matches) return;
-      observer.disconnect();
-      animations.forEach(animation => animation.progress(1));
-    });
-  }
 })();
