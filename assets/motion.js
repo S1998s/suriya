@@ -6,14 +6,12 @@
   const dataConstrained = Boolean(connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType));
   const gsap = window.gsap;
   const ScrollTrigger = window.ScrollTrigger;
-  const photoDialog = document.querySelector('.photo-dialog');
   const canAnimate = Boolean(gsap && !reducedMotion.matches && !dataConstrained && 'IntersectionObserver' in window);
   const canScrollAnimate = Boolean(canAnimate && ScrollTrigger);
   if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   const activeAnimations = new Set();
   const activeScrollTriggers = new Set();
-  let photoWarpCleanup;
-  let photoWarpRequest = 0;
+  let dialogPhotoTween;
   const isMobile = window.matchMedia('(max-width: 900px)').matches || window.matchMedia('(hover: none)').matches;
   const durationScale = isMobile ? 0.78 : 1;
   let revealObserver;
@@ -45,125 +43,19 @@
 
   function revealDialogPhoto(image) {
     closeDialogPhoto();
-    const request = ++photoWarpRequest;
-    if (!image) return;
-    const source = image.currentSrc || image.src;
-    const selectedImage = /(?:family-1|sports-1|candid-2)__w1200\.avif(?:$|\?)/.test(source);
-    photoDialog?.classList.toggle('is-photo-takeover', selectedImage);
-    if (!canAnimate) return;
-    const fallbackReveal = () => track(gsap.fromTo(image, { clipPath: 'inset(6% round 2px)', scale: 1.025 }, {
-      clipPath: 'inset(0% round 0px)', scale: 1, duration: .62, ease: 'power2.out', clearProps: 'clipPath,transform'
+    if (!image || !canAnimate) return;
+    dialogPhotoTween = track(gsap.fromTo(image, { opacity: 0 }, {
+      opacity: 1, duration: .2, ease: 'power1.out', clearProps: 'opacity'
     }));
-    if (isMobile || dataConstrained || !selectedImage || !('WebGLRenderingContext' in window)) {
-      fallbackReveal();
-      return;
-    }
-    image.decode().then(() => {
-      if (request !== photoWarpRequest || !canAnimate || !photoDialog?.open || !image.isConnected) return;
-      const figure = image.closest('figure');
-      if (!figure) return;
-      const canvas = document.createElement('canvas');
-      canvas.className = 'photo-warp-canvas';
-      canvas.setAttribute('aria-hidden', 'true');
-      figure.append(canvas);
-      const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' });
-      if (!gl) { canvas.remove(); fallbackReveal(); return; }
-
-      const vertexSource = 'attribute vec2 a_position; varying vec2 v_uv; void main(){v_uv=(a_position+1.0)*0.5;gl_Position=vec4(a_position,0.0,1.0);}';
-      const fragmentSource = 'precision mediump float; varying vec2 v_uv; uniform sampler2D u_image; uniform vec2 u_resolution; uniform vec2 u_imageSize; uniform vec2 u_pointer; uniform float u_time; uniform float u_strength; uniform float u_mode; void main(){float boxAspect=u_resolution.x/u_resolution.y;float imageAspect=u_imageSize.x/u_imageSize.y;vec2 uv=v_uv;if(imageAspect>boxAspect){float fit=boxAspect/imageAspect;float inset=(1.0-fit)*0.5;if(uv.y<inset||uv.y>1.0-inset)discard;uv.y=(uv.y-inset)/fit;}else{float fit=imageAspect/boxAspect;float inset=(1.0-fit)*0.5;if(uv.x<inset||uv.x>1.0-inset)discard;uv.x=(uv.x-inset)/fit;}vec2 delta=uv-u_pointer;float radius=length(delta*vec2(boxAspect,1.0));float wave=sin(radius*34.0-u_time*7.0)*exp(-radius*5.5)*u_strength;vec2 offset;if(u_mode<0.5){offset=normalize(delta+vec2(0.0001))*wave*0.018;}else if(u_mode<1.5){offset=vec2(wave*0.024,wave*0.003);}else{offset=vec2(wave*0.004,wave*0.022);}gl_FragColor=texture2D(u_image,clamp(uv+offset,0.001,0.999));}';
-      const compile = (type, sourceText) => {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, sourceText);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) { gl.deleteShader(shader); return null; }
-        return shader;
-      };
-      const vertex = compile(gl.VERTEX_SHADER, vertexSource);
-      const fragment = compile(gl.FRAGMENT_SHADER, fragmentSource);
-      if (!vertex || !fragment) { canvas.remove(); gl.getExtension('WEBGL_lose_context')?.loseContext(); fallbackReveal(); return; }
-      const program = gl.createProgram();
-      gl.attachShader(program, vertex);
-      gl.attachShader(program, fragment);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { canvas.remove(); gl.getExtension('WEBGL_lose_context')?.loseContext(); fallbackReveal(); return; }
-      gl.useProgram(program);
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-      const position = gl.getAttribLocation(program, 'a_position');
-      gl.enableVertexAttribArray(position);
-      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-      const texture = gl.createTexture();
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-      const uniforms = Object.fromEntries(['u_resolution','u_imageSize','u_pointer','u_time','u_strength','u_mode'].map(name=>[name,gl.getUniformLocation(program,name)]));
-      const mode = /sports-1/.test(source) ? 1 : /candid-2/.test(source) ? 2 : 0;
-      let pointer = [.5,.5];
-      let raf = 0;
-      let began = performance.now();
-      let until = began + 1500;
-      const resize = () => {
-        const rect = image.getBoundingClientRect();
-        const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-        canvas.width = Math.max(1, Math.round(rect.width * ratio));
-        canvas.height = Math.max(1, Math.round(rect.height * ratio));
-        gl.viewport(0,0,canvas.width,canvas.height);
-        gl.uniform2f(uniforms.u_resolution,canvas.width,canvas.height);
-        gl.uniform2f(uniforms.u_imageSize,image.naturalWidth,image.naturalHeight);
-        gl.uniform1f(uniforms.u_mode,mode);
-      };
-      const draw = now => {
-        raf = 0;
-        if (!photoDialog?.open || reducedMotion.matches) { cleanup(); return; }
-        const elapsed = now - began;
-        const strength = Math.max(0,1-elapsed/Math.max(1,until-began));
-        gl.uniform1f(uniforms.u_time,elapsed*.001);
-        gl.uniform1f(uniforms.u_strength,strength);
-        gl.uniform2f(uniforms.u_pointer,pointer[0],pointer[1]);
-        gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-        if (now < until) raf = requestAnimationFrame(draw);
-        else image.style.opacity = '0.08';
-      };
-      const startBurst = () => {
-        began = performance.now();
-        until = began + 720;
-        image.style.opacity = '0.08';
-        if (!raf) raf = requestAnimationFrame(draw);
-      };
-      const onPointer = event => {
-        const rect = canvas.getBoundingClientRect();
-        pointer = [Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),1-Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height))];
-        startBurst();
-      };
-      const cleanup = () => {
-        cancelAnimationFrame(raf);
-        window.removeEventListener('resize',resize);
-        canvas.removeEventListener('pointermove',onPointer);
-        image.style.opacity = '';
-        canvas.remove();
-        gl.getExtension('WEBGL_lose_context')?.loseContext();
-        photoWarpCleanup = null;
-      };
-      resize();
-      canvas.addEventListener('pointermove',onPointer,{passive:true});
-      window.addEventListener('resize',resize,{passive:true});
-      image.style.opacity = '0.08';
-      photoWarpCleanup = cleanup;
-      raf = requestAnimationFrame(draw);
-    }).catch(() => {
-      if (canAnimate) track(gsap.fromTo(image,{clipPath:'inset(6% round 2px)',scale:1.025},{clipPath:'inset(0% round 0px)',scale:1,duration:.62,ease:'power2.out',clearProps:'clipPath,transform'}));
-    });
   }
 
   function closeDialogPhoto() {
-    photoWarpRequest += 1;
-    photoWarpCleanup?.();
-    photoDialog?.classList.remove('is-photo-takeover');
+    if (!dialogPhotoTween) return;
+    const image = dialogPhotoTween.targets()[0];
+    dialogPhotoTween.kill();
+    activeAnimations.delete(dialogPhotoTween);
+    image.style.removeProperty('opacity');
+    dialogPhotoTween = null;
   }
 
   function animateFrom(target, vars = {}) {

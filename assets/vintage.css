@@ -160,16 +160,17 @@ h2 em { color: var(--olive); font-weight: 400; }
 .site-footer { margin: 0 5%; padding: 25px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 10px; color: var(--muted); }
 .footer-signature { font: italic 21px var(--serif); color: var(--ink); }
 .photo-dialog { border: 1px solid var(--rule); background: var(--paper-light); color: var(--ink); padding: 45px 20px 20px; max-width: min(900px, 94vw); max-height: 92svh; }
-.photo-dialog.is-photo-takeover { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 54px 4vw 4vh; overflow: hidden; border: 0; background: #261c15; color: var(--paper-light); }
-.photo-dialog.is-photo-takeover figure { display: grid; width: 100%; height: 100%; place-items: center; }
-.photo-dialog.is-photo-takeover img { width: 100%; height: 100%; max-height: none; object-fit: contain; }
-.photo-dialog.is-photo-takeover .dialog-close { z-index: 2; top: 12px; right: 12px; width: 38px; height: 38px; border-color: rgba(251,243,230,.6); color: var(--paper-light); }
 .photo-dialog::backdrop { background: rgba(40,29,19,.84); }
-.photo-dialog.is-photo-takeover::backdrop { background: rgba(30,22,16,.94); }
 .photo-dialog[open] { animation: journal-dialog-arrive .34s cubic-bezier(.22,.61,.36,1) both; }
 @keyframes journal-dialog-arrive { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .photo-dialog figure { position: relative; }
-.photo-warp-canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+.photo-dialog[aria-busy="true"], .photo-dialog.has-photo-error { width: min(520px, 94vw); }
+.photo-dialog[aria-busy="true"] figure, .photo-dialog.has-photo-error figure { display: none; }
+.photo-status { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 180px; padding: 20px; text-align: center; color: var(--muted); font-size: 12px; }
+.photo-status[hidden] { display: none; }
+.photo-loading-spinner { width: 34px; height: 34px; border: 2px solid var(--rule); border-top-color: var(--terracotta); border-radius: 50%; animation: photo-loading-spin .8s linear infinite; }
+.has-photo-error .photo-loading-spinner { display: none; }
+@keyframes photo-loading-spin { to { transform: rotate(360deg); } }
 .photo-dialog img { max-height: 72svh; width: 100%; object-fit: contain; }
 .photo-dialog figcaption { text-align: center; font: italic 25px var(--serif); padding-top: 15px; }
 .dialog-close { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--rule); background: transparent; }

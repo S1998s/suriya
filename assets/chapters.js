@@ -2,10 +2,10 @@
   'use strict';
 
   const photos = [
+    { title: 'Cricket Action 1', category: 'Childhood', image: 'childhood-2__w640.avif', full: 'childhood-2__w1200.avif', description: 'A cricket-playing moment.' },
     { title: 'Personal Moment 1', category: 'Family', image: 'childhood-1__w640.avif', full: 'childhood-1__w1200.avif', description: 'A childhood memory.' },
     { title: 'Personal Moment 2', category: 'Portraits', image: 'portraits-1__w640.avif', full: 'portraits-1__w1200.avif', description: 'A portrait, remembered.' },
     { title: 'Personal Moment 3', category: 'Portraits', image: 'portraits-3__w640.avif', full: 'portraits-3__w1200.avif', description: 'An urban moment.' },
-    { title: 'Cricket Action 1', category: 'Childhood', image: 'childhood-2__w640.avif', full: 'childhood-2__w1200.avif', description: 'A cricket-playing moment.' },
     { title: 'Sports Moment', category: 'Candid', image: 'candid-1__w640.avif', full: 'candid-1__w1200.avif', description: 'A moment from the sports and fitness journey.' },
     { title: 'Family Moment 1', category: 'Sports', image: 'sports-1__w640.avif', full: 'sports-1__w1200.avif', description: 'A family gathering.' },
     { title: 'Family Moment 2', category: 'Sports', image: 'sports-2__w640.avif', full: 'sports-2__w1200.avif', description: 'A family celebration.' },
@@ -56,13 +56,19 @@
 
   const grid = document.querySelector('[data-photo-grid]');
   if (grid) {
-    const categories = ['All', ...new Set(photos.map(photo => photo.category))];
+    const collections = {
+      'Family & Childhood': ['Family', 'Childhood'],
+      'Portraits & Candids': ['Portraits', 'Candid'],
+      Sports: ['Sports'],
+      Transformation: ['Transformation']
+    };
+    const categories = Object.keys(collections);
     const filters = document.querySelector('[data-gallery-filters]');
     const phaseFilters = document.querySelector('[data-phase-filters]');
     const count = document.querySelector('[data-gallery-count]');
-    let selected = 'All';
-    let selectedPhase = 'All';
-    const phases = ['All', 'Before', 'After'];
+    let selected = categories[0];
+    let selectedPhase = 'Before';
+    const phases = ['Before', 'After'];
     const phaseButtons = phaseFilters ? phases.map(phase => {
       const button = document.createElement('button');
       button.className = 'gallery-filter';
@@ -85,7 +91,7 @@
       button.setAttribute('aria-pressed', String(category === selected));
       button.addEventListener('click', () => {
         selected = category;
-        selectedPhase = 'All';
+        selectedPhase = 'Before';
         buttons.forEach(filter => filter.setAttribute('aria-pressed', String(filter.textContent === selected)));
         phaseButtons.forEach(filter => filter.setAttribute('aria-pressed', String(filter.textContent === selectedPhase)));
         if (phaseFilters) phaseFilters.hidden = selected !== 'Transformation';
@@ -97,8 +103,8 @@
     const renderPhotos = () => {
       window.portfolioMotion?.unobserveAll(grid.querySelectorAll('.photo-open'));
       grid.replaceChildren();
-      const visible = photos.filter(photo => (selected === 'All' || photo.category === selected) && (selected !== 'Transformation' || selectedPhase === 'All' || photo.phase === selectedPhase));
-      count.textContent = `${visible.length} ${visible.length === 1 ? 'photograph' : 'photographs'} · ${selected === 'All' ? 'all collections' : selected}`;
+      const visible = photos.filter(photo => collections[selected].includes(photo.category) && (selected !== 'Transformation' || photo.phase === selectedPhase));
+      count.textContent = `${visible.length} ${visible.length === 1 ? 'photograph' : 'photographs'} · ${selected}`;
       visible.forEach((photo, index) => {
         const button = document.createElement('button');
         button.className = 'story-photo photo-open';
@@ -124,13 +130,20 @@
   const dialog = document.querySelector('.photo-dialog');
   if (!dialog) return;
   const fullImage = dialog.querySelector('#photo-full');
+  const photoStatus = dialog.querySelector('.photo-status');
+  const statusText = photoStatus?.querySelector('.photo-status-text');
   let previousButton;
   let photoRequest = 0;
+  let cancelPhotoLoad;
   const clearPhoto = () => {
     photoRequest += 1;
+    cancelPhotoLoad?.();
+    cancelPhotoLoad = null;
     document.body.classList.remove('dialog-open');
     window.portfolioMotion?.closeDialogPhoto();
     dialog.removeAttribute('aria-busy');
+    dialog.classList.remove('has-photo-error');
+    if (photoStatus) photoStatus.hidden = true;
     fullImage.style.visibility = 'hidden';
     fullImage.removeAttribute('src');
   };
@@ -145,28 +158,43 @@
     const button = event.target.closest('.photo-open');
     if (!button) return;
     const request = ++photoRequest;
+    cancelPhotoLoad?.();
+    window.portfolioMotion?.closeDialogPhoto();
     previousButton = button;
     const thumbnail = button.querySelector('img');
     fullImage.alt = thumbnail?.alt || button.dataset.caption || 'Personal photograph';
     fullImage.style.visibility = 'hidden';
     fullImage.removeAttribute('src');
-    dialog.showModal();
     dialog.setAttribute('aria-busy', 'true');
+    dialog.classList.remove('has-photo-error');
+    if (photoStatus) photoStatus.hidden = false;
+    if (statusText) statusText.textContent = 'Loading photograph';
+    if (!dialog.open) dialog.showModal();
     document.body.classList.add('dialog-open');
     const imageReady = new Promise(resolve => {
-      const finish = () => {
-        fullImage.removeEventListener('load', finish);
-        fullImage.removeEventListener('error', finish);
-        resolve();
+      const finish = success => {
+        fullImage.removeEventListener('load', onLoad);
+        fullImage.removeEventListener('error', onError);
+        cancelPhotoLoad = null;
+        resolve(success);
       };
-      fullImage.addEventListener('load', finish, { once: true });
-      fullImage.addEventListener('error', finish, { once: true });
+      const onLoad = () => finish(fullImage.naturalWidth > 0);
+      const onError = () => finish(false);
+      cancelPhotoLoad = () => finish(false);
+      fullImage.addEventListener('load', onLoad, { once: true });
+      fullImage.addEventListener('error', onError, { once: true });
     });
     fullImage.src = button.dataset.image;
-    await imageReady;
+    const loaded = await imageReady;
     if (request !== photoRequest || !dialog.open) return;
-    fullImage.style.visibility = '';
     dialog.removeAttribute('aria-busy');
+    if (!loaded) {
+      dialog.classList.add('has-photo-error');
+      if (statusText) statusText.textContent = 'Unable to load this photograph. Close and reopen it to try again.';
+      return;
+    }
+    if (photoStatus) photoStatus.hidden = true;
+    fullImage.style.visibility = '';
     window.portfolioMotion?.revealDialogPhoto(fullImage, button.dataset.image);
   });
   dialog.querySelector('.dialog-close').addEventListener('click', closePhotoViewer);
