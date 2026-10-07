@@ -121,34 +121,49 @@
   else window.addEventListener('load', startFilmWhenIdle, { once: true });
 
   document.getElementById('year').textContent = new Date().getFullYear();
-  const dialog = document.querySelector('.photo-dialog');
-  const photograph = document.getElementById('photo-full');
-  let lastPhotoButton;
-  document.querySelectorAll('.memory').forEach(button => {
-    button.addEventListener('click', () => {
-      lastPhotoButton = button;
-      photograph.src = button.dataset.image;
-      photograph.alt = button.querySelector('img').alt;
-      dialog.showModal();
-      document.body.classList.add('dialog-open');
-      window.portfolioMotion?.revealDialogPhoto(photograph, button.dataset.image);
-    });
-  });
-  document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && dialog.open) {
-      event.preventDefault();
-      dialog.close();
-    }
-  });
-  dialog.addEventListener('click', event => {
-    const bounds = dialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
-  });
-  dialog.addEventListener('close', () => {
-    document.body.classList.remove('dialog-open');
-    window.portfolioMotion?.closeDialogPhoto();
-    if (lastPhotoButton) lastPhotoButton.focus({ preventScroll: true });
-  });
 
+  const chapterLink = document.querySelector('.scroll-chapter-link');
+  if (chapterLink) {
+    const chapterNumber = chapterLink.querySelector('.scroll-chapter-link__number');
+    const chapterLabel = chapterLink.querySelector('.scroll-chapter-link__label');
+    const chapterAction = chapterLink.querySelector('.scroll-chapter-link__action');
+    const chapters = [
+      { id: 'professional', href: 'professional/', number: 'I', label: 'Professional', description: 'Explore the full professional journey' },
+      { id: 'personal', href: 'personal/', number: 'II', label: 'Personal', description: 'Explore the full personal journey' }
+    ];
+    let activeChapter = null;
+    let chapterFrame = 0;
+    const updateChapterLink = () => {
+      chapterFrame = 0;
+      const readingLine = window.innerHeight * .52;
+      const active = chapters.find(chapter => {
+        const section = document.getElementById(chapter.id);
+        if (!section) return false;
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= readingLine && bounds.bottom > readingLine;
+      }) || null;
+      if (active === activeChapter) return;
+      activeChapter = active;
+      if (!active) {
+        chapterLink.classList.remove('is-visible');
+        chapterLink.setAttribute('aria-hidden', 'true');
+        chapterLink.tabIndex = -1;
+        return;
+      }
+      chapterLink.href = active.href;
+      chapterLink.setAttribute('aria-label', active.description);
+      chapterLink.setAttribute('aria-hidden', 'false');
+      chapterLink.tabIndex = 0;
+      chapterNumber.textContent = active.number;
+      chapterLabel.textContent = active.label;
+      chapterAction.textContent = 'Open';
+      chapterLink.classList.add('is-visible');
+    };
+    const scheduleChapterUpdate = () => {
+      if (!chapterFrame) chapterFrame = requestAnimationFrame(updateChapterLink);
+    };
+    window.addEventListener('scroll', scheduleChapterUpdate, { passive: true });
+    window.addEventListener('resize', scheduleChapterUpdate, { passive: true });
+    scheduleChapterUpdate();
+  }
 })();

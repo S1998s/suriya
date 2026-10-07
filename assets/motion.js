@@ -238,13 +238,16 @@
     const caption = element.querySelector('figcaption');
     const cards = [...element.parentElement.querySelectorAll('.memory')];
     const cardIndex = Math.max(0, cards.indexOf(element));
-    const mask = cardIndex === 0 ? 'inset(0 0 72% 0)' : cardIndex === 1 ? 'inset(0 100% 0 0)' : 'inset(12% 0 0 0)';
-    const timeline = gsap.timeline({ defaults: { ease: cardIndex === 1 ? 'power3.out' : 'power2.out' } });
+    const timeline = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    timeline.fromTo(element,
+      { autoAlpha: 0, y: 22 },
+      { autoAlpha: 1, y: 0, duration: .68 * durationScale, clearProps: 'opacity,visibility,transform' },
+      cardIndex * .08);
     if (image) timeline.fromTo(image,
-      { clipPath: mask, scale: cardIndex === 2 ? 1.035 : 1.015 },
-      { clipPath: 'inset(0% 0 0% 0)', scale: 1, duration: (cardIndex === 1 ? .62 : .88) * durationScale, clearProps: 'clipPath,transform' },
-      0);
-    if (caption) timeline.from(caption.children, { autoAlpha: 0, y: 8, stagger: .08, duration: .48 * durationScale, clearProps: 'opacity,visibility,transform' }, .2);
+      { scale: 1.045 },
+      { scale: 1, duration: .9 * durationScale, ease: 'power2.out', clearProps: 'transform' },
+      cardIndex * .08);
+    if (caption) timeline.from(caption.children, { autoAlpha: 0, y: 7, stagger: .06, duration: .4 * durationScale, clearProps: 'opacity,visibility,transform' }, .18 + cardIndex * .08);
     track(timeline);
   }
 

@@ -12,8 +12,8 @@ for (const entry of ['index.html', 'assets', 'Animations', 'CNAME']) {
 await cp(path.join(root, 'public', 'Shanmugavel_Resume.pdf'), path.join(output, 'Shanmugavel_Resume.pdf'));
 const publishedPhotos = [
   'candid-1', 'candid-2', 'childhood-1', 'childhood-2', 'family-1',
-  'portraits-1', 'portraits-2', 'portraits-3', 'portraits-4',
-  'sports-1', 'sports-2', 'sports-3', 'transformation-before-1',
+  'portraits-1', 'portraits-3', 'portraits-4',
+  'sports-1', 'sports-2', 'sports-3',
   'transformation-after-1', 'transformation-after-2', 'transformation-after-3',
 ];
 const imageDirectory = path.join(output, 'images', 'personal');
@@ -21,6 +21,12 @@ await mkdir(imageDirectory, { recursive: true });
 for (const name of publishedPhotos) {
   for (const width of [640, 1200]) {
     const filename = `${name}__w${width}.avif`;
+    await cp(path.join(root, 'public', 'images', 'personal', filename), path.join(imageDirectory, filename));
+  }
+}
+for (const name of ['transformation-before-2', 'transformation-before-3']) {
+  for (const width of [640, 1200]) {
+    const filename = `${name}__w${width}.jpg`;
     await cp(path.join(root, 'public', 'images', 'personal', filename), path.join(imageDirectory, filename));
   }
 }
